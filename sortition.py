@@ -63,7 +63,6 @@ if __name__ == '__main__':
     time_data = str(random.randint(10, 112312455121))
     data = shard_data + time_data + str(1233)
     seed = str(10)+hashlib.sha256(data.encode('utf-8')).hexdigest()
-    seed = ' '.join(seed[1:])
     num = 10
     w = 10
     W = 10*100

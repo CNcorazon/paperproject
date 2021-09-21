@@ -16,6 +16,11 @@ def generate_private_key():
     return private_key
 
 
+def generate_public_key(private_key):
+    public_key = private_key.public_key()
+    return public_key
+
+
 def read_private_key():
     with open("private_key.pem", "rb") as key_file:
         private_key = serialization.load_pem_private_key(
@@ -56,16 +61,11 @@ def verification(public_key, sig, msg):
             ),
             hashes.SHA256()
         )
+        print("ValidSignature")
+        return True
     except Exception as e:
         print("InvalidSignature", e)
-
-
-def generate_public_key(private_key):
-    public_key = private_key.public_key()
-    return public_key
-
-
-# 将公钥以PEM格式保存到文件中
+        return False
 
 
 def save_public_key(public_key, pem_name):
@@ -77,8 +77,6 @@ def save_public_key(public_key, pem_name):
     # 将PEM个数的数据写入文本文件中
     with open(pem_name, 'w+') as f:
         f.writelines(pem.decode())
-
-# 将私钥以PEM格式保存到文件中
 
 
 def save_private_key(private_key, pem_name):
@@ -104,9 +102,8 @@ if __name__ == '__main__':
     sig = signing(msg, private_key)
     public_key = generate_public_key(private_key)
     save_public_key(public_key, 'public_key.pem')
-    verification(public_key, sig, msg)
+    print(verification(public_key, sig, msg))
 
     p = read_public_key()
 
-    print(p)
-    verification(p, sig, msg)
+    print(verification(p, sig, msg))

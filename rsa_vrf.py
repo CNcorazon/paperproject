@@ -147,6 +147,7 @@ def VRF_proof2hash(pi, hash=hashlib.md5):
 
 
 def VRF_verifying(public_key, alpha, pi, k):
+    alpha = " ".join(alpha[1:])
     public_numbers = public_key.public_numbers()
     n = public_numbers.n
     e = public_numbers.e
@@ -168,6 +169,7 @@ alpha = " ".join(argv[1:])
 
 
 def get_vrf(alpha, private_key):
+    alpha = " ".join(alpha[1:])
     private_numbers = private_key.private_numbers()
     public_key = private_key.public_key()
     public_numbers = public_key.public_numbers()
