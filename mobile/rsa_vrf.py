@@ -180,3 +180,19 @@ def get_vrf(alpha, private_key):
     pi = VRF_prove(private_key_vrf, alpha, k)
     # beta = VRF_proof2hash(pi)
     return pi
+
+
+pi1 = get_vrf('123124', rsa.generate_private_key(
+    public_exponent=65537,
+    key_size=2048,
+    backend=default_backend()))
+pi1 = int(binascii.hexlify(pi1), 16)
+
+
+pi2 = get_vrf('1231312', rsa.generate_private_key(
+    public_exponent=65537,
+    key_size=2048,
+    backend=default_backend()))
+pi2 = int(binascii.hexlify(pi2), 16)
+
+print(pi1 < pi2)
