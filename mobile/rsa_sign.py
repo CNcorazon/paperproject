@@ -61,7 +61,7 @@ def verification(public_key, sig, msg):
             ),
             hashes.SHA256()
         )
-        print("ValidSignature")
+        # print("ValidSignature")
         return True
     except Exception as e:
         print("InvalidSignature", e)

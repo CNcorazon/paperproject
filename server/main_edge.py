@@ -1,13 +1,15 @@
 
 import threading
 import time
-
+import logging
 from edge_node import EdgeNode
 from cryptography.hazmat.primitives import serialization
 
 '''
 边缘节点接受每一轮中的投票
 '''
+logging.basicConfig(
+    format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO, filemode='w', filename='server.log')
 
 
 class RecvMsgsThread(threading.Thread):
@@ -230,7 +232,7 @@ def main():
     node = EdgeNode(1)
     RecvMsg_thread = RecvMsgsThread(node)
     SendGossip_thread = SendGossipVoteThread(node)
-    SendVote_thread = SendMsgThread(node)
+    SendMsg_thread = SendMsgThread(node)
     MessageForward_thread = MessageForwardThread(node)
     SendProblock_thread = SendProblockThread(node)
     SendTxblock_thread = SendTxblockThread(node)
@@ -242,16 +244,19 @@ def main():
     AppendTxblock_thread = AppendTxblockThread(node)
     RecvMsg_thread.start()
     # SendGossip_thread.start()
-    # SendVote_thread.start()
+    SendMsg_thread.start()
     MessageForward_thread.start()
+
     SendProblock_thread.start()
-    # SendTxblock_thread.start()
-    # SendTeeProof_thread.start()
     AppendBlock_thread.start()
-    # GenerateTxblock_thread.start()
-    # TxValidation_thread.start()
-    # CollectTxblock_thread.start()
-    # AppendTxblock_thread.start()
+
+    GenerateTxblock_thread.start()
+    SendTxblock_thread.start()
+    CollectTxblock_thread.start()
+
+    TxValidation_thread.start()
+    SendTeeProof_thread.start()
+    AppendTxblock_thread.start()
 
 
 if __name__ == '__main__':

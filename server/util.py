@@ -21,27 +21,33 @@ class PriorityQueue:
         self.count += 1
 
     def pop(self):
-        while self.isEmpty():
-            if not self.isEmpty():
-                (priority, _, item) = heapq.heappop(self.heap)
-                return item, priority
-        (priority, _, item) = heapq.heappop(self.heap)
-        return item, priority
+        # while self.isEmpty():
+        #     if not self.isEmpty():
+        #         (priority, _, item) = heapq.heappop(self.heap)
+        #         return item, priority
+        try:
+            (priority, _, item) = heapq.heappop(self.heap)
+            return item, priority
+        except:
+            return 'empty', 0
 
     # 空队列超过一定的时间，则返回NONE
-    def threshold_pop(self, threshold):
-        start = time.time()
-        while self.isEmpty():
-            if time.time() > start + threshold:
-                return 'timeout'
-            if not self.isEmpty():
-                (priority, _, item) = heapq.heappop(self.heap)
-                return item, priority
-        (priority, _, item) = heapq.heappop(self.heap)
-        return item, priority
+    # def threshold_pop(self, threshold):
+    #     start = time.time()
+    #     while self.isEmpty():
+    #         if time.time() > start + threshold:
+    #             return 'timeout'
+    #         if not self.isEmpty():
+    #             (priority, _, item) = heapq.heappop(self.heap)
+    #             return item, priority
+    #     (priority, _, item) = heapq.heappop(self.heap)
+    #     return item, priority
 
     def isEmpty(self):
         return len(self.heap) == 0
+
+    def getLength(self):
+        return len(self.heap)
 
     def update(self, item, priority):
         # If item already in priority queue with higher priority, update its priority and rebuild the heap.

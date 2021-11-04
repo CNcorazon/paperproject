@@ -33,7 +33,11 @@
 from rsa_sign import *
 from cryptography.hazmat.primitives import hashes
 import threading
+import logging
 from mobile_node import *
+
+logging.basicConfig(
+    format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO, filemode='w', filename='mobile.log')
 
 
 class Thread1(threading.Thread):
@@ -47,8 +51,10 @@ class Thread1(threading.Thread):
 
     def run(self):
         while self.__running.isSet():
-            flag, hblock_star = self.node.BAstar()
-            print('------Consensus is over------:', flag, hblock_star)
+            self.node.propose_block()
+            self.node.BAstar()
+            self.node.signing_txblock()
+            self.node.signing_teeproof()
 
     def stop(self):
         self.__flag.set()
@@ -209,7 +215,7 @@ def main():
     # serverip1 = '10.211.55.4'
 
     node = MobileNode('172.19.5.8', 1, 2, 1)
-    node.node_storage.set_N(5)
+    node.node_storage.set_N(0)
 
     thread1 = Thread1(node)
     thread2 = Thread2(node)
@@ -222,9 +228,9 @@ def main():
     thread9 = Thread9(node, serverip)
 
     thread1.start()
-    thread2.start()
-    thread3.start()
-    thread4.start()
+    # thread2.start()
+    # thread3.start()
+    # thread4.start()
     thread5.start()
     thread6.start()
     thread7.start()

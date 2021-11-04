@@ -24,8 +24,11 @@ class message():
         self.togossip = True
 
     def update_weight(self, weight, totalweight):
-        self.sign_msg['weight'] = weight
-        self.sign_msg['totalweight'] = totalweight
+        try:
+            self.sign_msg['weight'] = weight
+            self.sign_msg['totalweight'] = totalweight
+        except:
+            return None
 
 
 if __name__ == '__main__':

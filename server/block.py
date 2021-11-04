@@ -49,6 +49,9 @@ class ProBlock:
             format=serialization.PublicFormat.SubjectPublicKeyInfo
         )
 
+    def get_publickey(self):
+        return serialization.load_pem_public_key(self.pk_pem,)
+
 
 class TxBlock():
     def __init__(
@@ -81,6 +84,10 @@ class TxBlock():
             encoding=serialization.Encoding.PEM,
             format=serialization.PublicFormat.SubjectPublicKeyInfo
         )
+
+    def get_publickey(self):
+        return serialization.load_pem_public_key(self.pk_pem,)
+
     # def get_header_str(self):
     #     shard_data = str(self.shard_id) + str(self.shard_length)
     #     time_data = str(self.timestamp)
