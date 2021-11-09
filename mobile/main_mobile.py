@@ -61,65 +61,10 @@ class Thread1(threading.Thread):
         self.__running.clear()
 
 
-class Thread2(threading.Thread):
-    def __init__(self, node, *args, **kwargs):
-        super(Thread2, self).__init__(*args, **kwargs)
-        self.node = node
-        self.__flag = threading.Event()
-        self.__flag.set()
-        self.__running = threading.Event()
-        self.__running.set()
-
-    def run(self):
-        while self.__running.isSet():
-            self.node.signing_txblock()
-
-    def stop(self):
-        self.__flag.set()
-        self.__running.clear()
-
-
-class Thread3(threading.Thread):
-    def __init__(self, node, *args, **kwargs):
-        super(Thread3, self).__init__(*args, **kwargs)
-        self.node = node
-        self.__flag = threading.Event()
-        self.__flag.set()
-        self.__running = threading.Event()
-        self.__running.set()
-
-    def run(self):
-        while self.__running.isSet():
-            self.node.signing_teeproof()
-
-    def stop(self):
-        self.__flag.set()
-        self.__running.clear()
-
-
-class Thread4(threading.Thread):
-    def __init__(self, node, *args, **kwargs):
-        super(Thread4, self).__init__(*args, **kwargs)
-        self.node = node
-        self.__flag = threading.Event()
-        self.__flag.set()
-        self.__running = threading.Event()
-        self.__running.set()
-
-    def run(self):
-        while self.__running.isSet():
-            self.node.propose_block()
-
-    def stop(self):
-        self.__flag.set()
-        self.__running.clear()
-
-
 class Thread5(threading.Thread):
-    def __init__(self, node, serverip, *args, **kwargs):
+    def __init__(self, node, *args, **kwargs):
         super(Thread5, self).__init__(*args, **kwargs)
         self.node = node
-        self.serverip = serverip
         self.__flag = threading.Event()
         self.__flag.set()
         self.__running = threading.Event()
@@ -127,7 +72,7 @@ class Thread5(threading.Thread):
 
     def run(self):
         while self.__running.isSet():
-            self.node.send_msg(self.serverip)
+            self.node.send_msg()
 
     def stop(self):
         self.__flag.set()
@@ -135,10 +80,9 @@ class Thread5(threading.Thread):
 
 
 class Thread6(threading.Thread):
-    def __init__(self, node, serverip, *args, **kwargs):
+    def __init__(self, node, *args, **kwargs):
         super(Thread6, self).__init__(*args, **kwargs)
         self.node = node
-        self.serverip = serverip
         self.__flag = threading.Event()
         self.__flag.set()
         self.__running = threading.Event()
@@ -146,7 +90,7 @@ class Thread6(threading.Thread):
 
     def run(self):
         while self.__running.isSet():
-            self.node.recv_msg(self.serverip)
+            self.node.recv_msg()
 
     def stop(self):
         self.__flag.set()
@@ -154,10 +98,9 @@ class Thread6(threading.Thread):
 
 
 class Thread7(threading.Thread):
-    def __init__(self, node, serverip, *args, **kwargs):
+    def __init__(self, node, *args, **kwargs):
         super(Thread7, self).__init__(*args, **kwargs)
         self.node = node
-        self.serverip = serverip
         self.__flag = threading.Event()
         self.__flag.set()
         self.__running = threading.Event()
@@ -165,7 +108,7 @@ class Thread7(threading.Thread):
 
     def run(self):
         while self.__running.isSet():
-            self.node.recv_problockmsg(self.serverip)
+            self.node.recv_problockmsg()
 
     def stop(self):
         self.__flag.set()
@@ -173,10 +116,9 @@ class Thread7(threading.Thread):
 
 
 class Thread8(threading.Thread):
-    def __init__(self, node, serverip, *args, **kwargs):
+    def __init__(self, node, *args, **kwargs):
         super(Thread8, self).__init__(*args, **kwargs)
         self.node = node
-        self.serverip = serverip
         self.__flag = threading.Event()
         self.__flag.set()
         self.__running = threading.Event()
@@ -184,7 +126,7 @@ class Thread8(threading.Thread):
 
     def run(self):
         while self.__running.isSet():
-            self.node.recv_txblockmsg(self.serverip)
+            self.node.recv_txblockmsg()
 
     def stop(self):
         self.__flag.set()
@@ -192,10 +134,9 @@ class Thread8(threading.Thread):
 
 
 class Thread9(threading.Thread):
-    def __init__(self, node, serverip, *args, **kwargs):
+    def __init__(self, node,  *args, **kwargs):
         super(Thread9, self).__init__(*args, **kwargs)
         self.node = node
-        self.serverip = serverip
         self.__flag = threading.Event()
         self.__flag.set()
         self.__running = threading.Event()
@@ -203,7 +144,7 @@ class Thread9(threading.Thread):
 
     def run(self):
         while self.__running.isSet():
-            self.node.recv_teeproof(self.serverip)
+            self.node.recv_teeproof()
 
     def stop(self):
         self.__flag.set()
@@ -214,18 +155,18 @@ def main():
     serverip = '172.19.5.8'
     # serverip1 = '10.211.55.4'
 
-    node = MobileNode('172.19.5.8', 1, 2, 1)
+    node = MobileNode('172.19.5.8', 1, 2, 1, serverip)
     node.node_storage.set_N(0)
 
     thread1 = Thread1(node)
-    thread2 = Thread2(node)
-    thread3 = Thread3(node)
-    thread4 = Thread4(node)
-    thread5 = Thread5(node, serverip)
-    thread6 = Thread6(node, serverip)
-    thread7 = Thread7(node, serverip)
-    thread8 = Thread8(node, serverip)
-    thread9 = Thread9(node, serverip)
+    # thread2 = Thread2(node)
+    # thread3 = Thread3(node)
+    # thread4 = Thread4(node)
+    thread5 = Thread5(node)
+    thread6 = Thread6(node)
+    thread7 = Thread7(node)
+    thread8 = Thread8(node)
+    thread9 = Thread9(node)
 
     thread1.start()
     # thread2.start()

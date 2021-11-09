@@ -17,8 +17,9 @@ from util import PriorityQueue
 
 
 class Communicator():
-    def __init__(self, shard_id):
+    def __init__(self, shard_id, iplist):
         self.shard_id = shard_id
+        self.iplist = iplist
 
         # 消息接受Buffer
         self.RecMsgBuffer = PriorityQueue()
@@ -37,6 +38,28 @@ class Communicator():
         # 服务器之间同步用的buffer
         self.SysnMsgBuffer = PriorityQueue()
 
+        self.socket1 = zmq.Context().socket(zmq.REP)
+        self.socket1.bind('tcp://*:5555')
+
+        self.socket2 = zmq.Context().socket(zmq.PUB)
+        self.socket2.bind('tcp://*:5565')
+
+        self.socket3 = zmq.Context().socket(zmq.PUB)
+        self.socket3.bind('tcp://*:5570')
+
+        self.socket4 = zmq.Context().socket(zmq.PUB)
+        self.socket4.bind('tcp://*:5575')
+
+        self.socket5 = zmq.Context().socket(zmq.PUB)
+        self.socket5.bind('tcp://*:5580')
+
+        # 服务器之间的广播
+        self.socket6 = []
+        for ip in iplist:
+            socket = zmq.Context().socket(zmq.REQ)
+            socket.connect('tcp://%s:5555' % ip)
+            self.socket6.append(socket)
+
     def init_buffer(self):
         self.AppendBlockSigBuffer = PriorityQueue()
         self.TxBlockSigBuffer = PriorityQueue()
@@ -45,16 +68,16 @@ class Communicator():
         # self.TeeProogMsgBuffer = PriorityQueue()
 
     def recv_msg(self):
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        socket.bind("tcp://*:5555")
+        # context = zmq.Context()
+        # socket = context.socket(zmq.REP)
+        # socket.bind("tcp://*:5555")
         while True:
             try:
-                msg = socket.recv_pyobj()
+                msg = self.socket1.recv_pyobj()
                 # value = msg.decode().split(' ')[3]
                 # pk = serialization.load_pem_public_key(pem)
-                socket.send_string('Send successfully!')
-                self.RecMsgBuffer.push(msg[0], random.randint(2, 10000))
+                self.socket1.send_string('Send successfully!')
+                self.RecMsgBuffer.push(msg[0], msg[1])
                 logging.info("RecvMsgThread: recvd msg from client!")
             except Exception as e:
                 print('异常:', e)
@@ -62,51 +85,52 @@ class Communicator():
 
     def send_msg(self, msg):
         if msg[1] != 0:
-            context = zmq.Context()
-            socket = context.socket(zmq.REQ)
-            socket.bind("tcp://*:5565")
-            socket.send_pyobj(msg)
-            logging.info("SendMsgThread: sent msg to client!")
-            msg1 = socket.recv()
-        # print(msg1)
+            # context = zmq.Context()
+            # socket = context.socket(zmq.REQ)
+            # socket.bind("tcp://*:5565")
+            # socket.send_pyobj(msg)
+            # logging.info("SendMsgThread: sent msg to client!")
+            # msg1 = socket.recv()
+            self.socket2.send_pyobj(msg)
 
-    def send_gossipmsg(self, msg, ip):
+    def send_gossipmsg(self, msg):
         if msg[1] != 0:
-            context = zmq.Context()
-            print('Thread2: gossip votes to server %s' % ip)
-            socket = context.socket(zmq.REQ)
-            socket.connect("tcp://%s:5555" % ip)
-            socket.send_pyobj(msg)
-            msg1 = socket.recv()
+            for socket in self.socket6:
+                socket.send_pyobj(msg)
+                msg1 = socket.recv()
 
     def send_problockmsg(self, msg):
         if msg[1] != 0:
-            context = zmq.Context()
-            socket = context.socket(zmq.REQ)
-            socket.bind("tcp://*:5570")
-            logging.info('SendProblockThread: sending one problockmsg')
-            # print(msg)
-            socket.send_pyobj(msg)
-            msg1 = socket.recv()
+            # context = zmq.Context()
+            # socket = context.socket(zmq.REQ)
+            # socket.bind("tcp://*:5570")
+            # logging.info('SendProblockThread: sending one problockmsg')
+            # # print(msg)
+            # socket.send_pyobj(msg)
+            # msg1 = socket.recv()
             # print(msg1)
+            self.socket3.send_pyobj(msg)
 
     def send_txblockmsg(self, msg):
         if msg[1] != 0:
-            context = zmq.Context()
-            socket = context.socket(zmq.REQ)
-            socket.bind("tcp://*:5575")
-            socket.send_pyobj(msg)
-            msg1 = socket.recv()
-        # print(msg1)
+            # context = zmq.Context()
+            # socket = context.socket(zmq.REQ)
+            # socket.bind("tcp://*:5575")
+            # socket.send_pyobj(msg)
+            # msg1 = socket.recv()
+            # print(msg1)
+            self.socket4.send_pyobj(msg)
 
     def send_teeproofmsg(self, msg):
         if msg[1] != 0:
-            context = zmq.Context()
-            socket = context.socket(zmq.REQ)
-            socket.bind("tcp://*:5580")
-            socket.send_pyobj(msg)
-            msg1 = socket.recv()
-        # print(msg1)
+            # context = zmq.Context()
+            # socket = context.socket(zmq.REQ)
+            # socket.bind("tcp://*:5580")
+            # socket.send_pyobj(msg)
+            # msg1 = socket.recv()
+            # print(msg1)
+            self.socket5.send_pyobj(msg)
+
     # def recv_gossipmsg(self, RecMsgBuffer):
     #     context = zmq.Context()
     #     socket = context.socket(zmq.REP)

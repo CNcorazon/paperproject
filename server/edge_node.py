@@ -73,7 +73,8 @@ class EdgeNode():
 
         self.public_key = self.private_key.public_key()
 
-        self.communicator = Communicator(shard_id)
+        self.iplist = ['172.20.10.3']
+        self.communicator = Communicator(shard_id, self.iplist)
         self.node_storage = EdgeNodeStorage(shard_id)
 
         self.TxblockflagBuffer = PriorityQueue()
@@ -85,22 +86,21 @@ class EdgeNode():
         while self.communicator.SysnMsgBuffer.getLength() <= 0:
             continue
         msg = self.communicator.SysnMsgBuffer.pop()
-        ip_list = ['172.20.10.3']
-        for ip in ip_list:
-            self.communicator.send_gossipvote(msg, ip)
+        self.communicator.send_gossipvote(msg)
 
     def sendmsgs(self):
         while self.communicator.SendMsgBuffer.getLength() <= 0:
             continue
         msg = self.communicator.SendMsgBuffer.pop()
-        msg[0].update_weight(self.node_storage.get_mobileweight(
-            msg[0].pk_pem), self.node_storage.totalweight)
+        # msg[0].update_weight(self.node_storage.get_mobileweight(
+        #     msg[0].pk_pem), self.node_storage.totalweight)
         self.communicator.send_msg(msg)
 
     def sendproblock(self):
         while self.communicator.ProBlockMsgBuffer.getLength() <= 0:
             continue
         msg = self.communicator.ProBlockMsgBuffer.pop()
+        print('send了但没有完全send:', msg)
         self.communicator.send_problockmsg(msg)
 
     def sendtxblock(self):
@@ -135,6 +135,8 @@ class EdgeNode():
         # 后三个是服务器需要处理和存储的信息
         elif msg[0].type == 'final_consensus':
             self.communicator.AppendBlockSigBuffer.push(msg[0], msg[1])
+        elif msg[0].type == 'tentative_consensus':
+            self.communicator.AppendBlockSigBuffer.push(msg[0], msg[1])
         elif msg[0].type == 'txblock_sig':
             self.communicator.TxBlockSigBuffer.push(msg[0], msg[1])
         elif msg[0].type == 'proof_sig':
@@ -158,10 +160,11 @@ class EdgeNode():
     def generate_problock(self):
         # 花三秒时间来创建problock, 省略对n-2块和n-5个块签名的确认
         time.sleep(3)
-        block = ProBlock(1, len(
-            self.node_storage.proposal_block[1])+1, self.node_storage.proposal_block[1][-1].decode(), None, None, None)
-        print('block num and previous hash:', len(
-            self.node_storage.proposal_block[1])+1, self.node_storage.proposal_block[1][-1])
+        shard_length = len(self.node_storage.proposal_block[1])+1
+        previous_hash = self.node_storage.proposal_block[1][-1].decode()
+        block = ProBlock(
+            1, shard_length, previous_hash, None, None, None)
+        print('block num and previous hash:', shard_length, previous_hash)
         return block
 
     def AppendBlock(self):
@@ -171,29 +174,31 @@ class EdgeNode():
         pro_block_msg = message(public_key=self.public_key, sig=signing(
             pickle.dumps(pro_block), self.private_key), msgtype='Problock', sign_msg=pro_block)
         self.communicator.ProBlockMsgBuffer.push(
-            pro_block_msg, random.randint(2, 10000))
+            pro_block_msg, random.randint(1, 2000))
         while True:
             # 暂不记录投票人的信息，只要投票数够了就上链
             while self.communicator.AppendBlockSigBuffer.getLength() <= 0:
                 continue
             msg = self.communicator.AppendBlockSigBuffer.pop()
             votes = msg[0].sign_msg['votes']
-
             counts = counts + votes
             print(counts)
             if counts > 2/3*config.NODE_NUM:
                 self.node_storage.proposal_block[self.shard_id].append(
                     msg[0].sign_msg['consensus_block'])
                 print(self.node_storage.proposal_block[self.shard_id])
+                counts = 0
+                time.sleep(5)
+                print('Append a problock')
                 logging.info('************Append a problock!************')
-                # 清空所有buffer（除了同步buffer），确保不再发送消息（但是要处理移动节点超时上传的msg
-                self.communicator.init_buffer()
                 # 发送problock
                 pro_block = self.generate_problock()
                 pro_block_msg = message(public_key=self.public_key, sig=signing(
                     pickle.dumps(pro_block), self.private_key), msgtype='Problock', sign_msg=pro_block)
                 self.communicator.ProBlockMsgBuffer.push(
-                    pro_block_msg, random.randint(2, 10000))
+                    pro_block_msg, random.randint(1, 2000))
+                # 清空所有buffer（除了同步buffer），确保不再发送消息（但是要处理移动节点超时上传的msg
+                self.communicator.init_buffer()
 
     def generate_txblock(self):
         # 花0.5秒来创建txblock, 省略打包步骤
@@ -202,6 +207,7 @@ class EdgeNode():
             continue
         tx_block = TxBlock(
             1, len(self.node_storage.proposal_block[1]), None)
+        print(len(self.node_storage.proposal_block[1]))
         tx_block_msg = message(public_key=self.public_key, sig=signing(
             pickle.dumps(tx_block), self.private_key), msgtype='Txblock', sign_msg=tx_block)
         # print('生成txblock的位置:', len(self.node_storage.proposal_block[1]))
@@ -218,17 +224,21 @@ class EdgeNode():
                 self.node_storage.proposal_block[self.shard_id])].append(txblock.sign_msg)
             self.node_storage.transaction_block_pool[len(self.node_storage.proposal_block[self.shard_id])] = sorted(
                 self.node_storage.transaction_block_pool[len(self.node_storage.proposal_block[self.shard_id])], key=lambda x: x.timestamp)
-            # print('收集到带签名的txblock了！')
+            # print('收到了带有签名的txblock')
 
     def tx_validation(self):
         # 单个txblock的验证时间为
-        problock_num = len(self.node_storage.proposal_block[self.shard_id]) - 2
+        problock_num = len(self.node_storage.proposal_block[self.shard_id]) - 3
         count = 1
-        while problock_num > 0:
-            if len(self.node_storage.proposal_block[self.shard_id]) - 2 != problock_num:
-                break
+        # print('************当前块为: ', problock_num)
+        # print(self.node_storage.transaction_block_pool[problock_num])
+        if problock_num > 0:
             for txblock in self.node_storage.transaction_block_pool[problock_num]:
-                print("validation processing")
+                if len(self.node_storage.proposal_block[self.shard_id]) - 3 != problock_num:
+                    break
+                print('当前交易验证的块是: ', problock_num)
+                print('当前共识块的长度为: ',
+                      len(self.node_storage.proposal_block[self.shard_id]) - 3)
                 # msg中可以模拟验证的成功率，比如生成一个1-100随机数，1-5则验证失败
                 num = random.randint(1, 100)
                 # if num > 5:
@@ -245,23 +255,27 @@ class EdgeNode():
                     proof, random.randint(2, 10000))
                 self.communicator.TeeProofMsgBuffer.push(
                     proof, random.randint(2, 10000))
-                num = len(
+                num1 = len(
                     self.node_storage.transaction_block_pool[problock_num]) - count
-                print('tee待验证交易块数量:', num)
-                if num == 0:
+                print('tee待验证交易块数量:', num1)
+                if num1 == 0:
                     self.node_storage.transaction_block_pool[problock_num] = []
                     break
                 count = count + 1
+        while len(self.node_storage.proposal_block[self.shard_id]) - 3 == problock_num:
+            # print(12312412413242312312312312132)
+            continue
 
     def AppendTxblock(self):
         # 需要由不同tee签名的txblock才可以上链
         count = {}
-        pro_num = len(self.node_storage.proposal_block[1]) - 2
+        pro_num = len(self.node_storage.proposal_block[1]) - 3
         # 超时机制
         to = True
         if pro_num > 0:
+            print('进入循环前的pro_num', pro_num)
             while to:
-                if len(self.node_storage.proposal_block[1])-2 != pro_num:
+                if len(self.node_storage.proposal_block[1])-3 != pro_num:
                     break
                 start = time.time()
                 while self.communicator.TeeProofSigBuffer.getLength() <= 0:
@@ -271,15 +285,25 @@ class EdgeNode():
                     continue
                 if to:
                     msg, priority = self.communicator.TeeProofSigBuffer.pop()
-                    print(count)
-                    if not str(msg.sign_msg['txblock_num']) in count.keys():
-                        count[str(msg.sign_msg['txblock_num'])] = 1
-                    else:
-                        count[str(msg.sign_msg['txblock_num'])] = count[str(
-                            msg.sign_msg['txblock_num'])] + 1
+                    if priority != 0:
+                        print(count)
+                        print('收到的probloc_num, 应该收到的层数：', msg.sign_msg['problock_num'], len(
+                            self.node_storage.proposal_block[1]) - 3)
+                        if msg.sign_msg['problock_num'] > len(self.node_storage.proposal_block[1]) - 3:
+                            break
+                        if msg.sign_msg['problock_num'] < len(self.node_storage.proposal_block[1]) - 3:
+                            continue
+                        print('append a txblock!')
+                        if not str(msg.sign_msg['txblock_num']) in count.keys():
+                            count[str(msg.sign_msg['txblock_num'])] = 1
+                        else:
+                            count[str(msg.sign_msg['txblock_num'])] = count[str(
+                                msg.sign_msg['txblock_num'])] + 1
             for key in count:
                 if count[key] > 2/3 * config.TEE_NUM:
                     self.node_storage.transaction_block[pro_num].append(key)
-                print(self.node_storage.transaction_block[pro_num])
-            self.communicator.TeeProofMsgBuffer = PriorityQueue()
+            print('problock_num, txblocks:', pro_num,
+                  self.node_storage.transaction_block[pro_num])
+            while len(self.node_storage.proposal_block[1])-3 == pro_num:
+                continue
             # print(self.node_storage.transaction_block[len()])

@@ -1,10 +1,4 @@
-from math import trunc
+import hashlib
 
-
-while True:
-    while True:
-        break
-    if True:
-        if True:
-            continue
-        print(123)
+value = hashlib.sha256('123'.encode()).hexdigest().encode()
+print(value)

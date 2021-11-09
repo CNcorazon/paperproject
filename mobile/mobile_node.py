@@ -71,11 +71,11 @@ class MobileNodeStorage():
 
 
 class MobileNode():
-    def __init__(self, node_ip, shard_id, nodes, shard_num):
+    def __init__(self, node_ip, shard_id, nodes, shard_num, serverip):
         # 节点存储
         self.node_storage = MobileNodeStorage(
             node_ip, shard_id, nodes, shard_num)
-        self.communicator = Communicator(shard_num)
+        self.communicator = Communicator(shard_num, serverip)
         self.shard_id = shard_id
         # 私钥
         self.private_key = rsa.generate_private_key(
@@ -85,36 +85,55 @@ class MobileNode():
 
         self.public_key = self.private_key.public_key()
 
+        # 当propose块之后才开启除了proposeblock之外的通信线程
+        self.problock_flag = False
+        self.consensus_flag = False
+        self.txblock_flag = False
+        self.teeproof_flag = False
     '''
     通信模块，分为发送和接受
     '''
 
-    def send_msg(self, ip):
+    def send_msg(self):
         while self.communicator.SendMsgBuffer.getLength() <= 0:
             continue
         msg = self.communicator.SendMsgBuffer.pop()
-        self.communicator.send_msg(msg, ip)
+        self.communicator.send_msg(msg)
 
-    def recv_msg(self, ip):
-        self.communicator.recv_msg(ip)
+    def recv_problockmsg(self):
+        while True:
+            if self.problock_flag:
+                self.communicator.recv_problock_msg()
+            time.sleep(1)
 
-    def recv_problockmsg(self, ip):
-        self.communicator.recv_problock_msg(ip)
+    def recv_msg(self):
+        while True:
+            if self.consensus_flag:
+                self.communicator.recv_msg()
 
-    def recv_txblockmsg(self, ip):
-        self.communicator.recv_txblock_msg(ip)
+    def recv_txblockmsg(self):
+        while True:
+            if self.txblock_flag:
+                self.communicator.recv_txblock_msg()
 
-    def recv_teeproof(self, ip):
-        self.communicator.recv_TeeProof_msg(ip)
+    def recv_teeproof(self):
+        while True:
+            if self.teeproof_flag:
+                self.communicator.recv_TeeProof_msg()
     '''
     计算vrf,并提出pro_block
     '''
 
     def propose_block(self):
-        while self.communicator.ProBlockMsgBuffer.getLength() <= 0:
-            continue
-        msg, priority = self.communicator.ProBlockMsgBuffer.pop()
-        pro_block = msg.sign_msg
+        self.problock_flag = True
+        while True:
+            while self.communicator.ProBlockMsgBuffer.getLength() <= 0:
+                continue
+            msg, priority = self.communicator.ProBlockMsgBuffer.pop()
+            pro_block = msg.sign_msg
+            if self.node_storage.N <= pro_block.shard_length - 3 or pro_block.shard_length < 3:
+                break
+        self.problock_flag = False
         seed = str(pro_block.shard_length) + pro_block.previous_hash
         # sortition.Sortiiton(self.private_key, seed, config.CANDIDATE,
         #                     self.node_storage.weight, self.node_storage.totalweight)
@@ -132,7 +151,7 @@ class MobileNode():
             sig = signing(pro_block.get_str(), self.private_key)
             msg1 = message(self.public_key, sig, 'pro_block', pro_block)
             self.communicator.SendMsgBuffer.push(
-                msg1, random.randint(2, 10000))
+                msg1, random.randint(1, 2000))
             print('propose了一个块')
 
     '''
@@ -146,7 +165,13 @@ class MobileNode():
         while self.communicator.RecvMsgBuffer.getLength() <= 0:
             continue
         msg, priority = self.communicator.RecvMsgBuffer.pop()
+        # print('msg is:', msg.sign_msg)
+        # print('priority is:', priority)
         pro_block = msg.sign_msg
+        print('本轮共识的区块层数:', pro_block.shard_length)
+        print('本轮共识的区块的hprev:', pro_block.previous_hash)
+        self.node_storage.N = pro_block.shard_length
+        self.node_storage.previous_hash = pro_block.previous_hash
         start = time.time()
         winner = pro_block
         tmp = int(binascii.hexlify(pro_block.vrf), 16)
@@ -159,9 +184,11 @@ class MobileNode():
                     break
                 continue
             if to:
-                pro_block, priority = self.communicator.RecvMsgBuffer.pop()
-                if int(binascii.hexlify(pro_block.vrf), 16) < tmp:
-                    winner = pro_block
+                msg, priority = self.communicator.RecvMsgBuffer.pop()
+                if msg.type == 'pro_block':
+                    print('收到了一个problock')
+                    if int(binascii.hexlify(pro_block.vrf), 16) < tmp:
+                        winner = pro_block
 
         # 首先验证block的签名
         verification(winner.get_publickey(), winner.sig, winner.get_str())
@@ -184,7 +211,7 @@ class MobileNode():
         value = hashlib.sha256(winner.get_str()).hexdigest().encode()
         sig = signing(value, self.private_key)
         msg = message(self.public_key, sig, 'reduction', value)
-        self.communicator.SendMsgBuffer.push(msg, 1)
+        self.communicator.SendMsgBuffer.push(msg, random.randint(2001, 5000))
         hblock = self.CountVote(0)
         logging.info('************reduction end************')
         logging.info('hblock is:')
@@ -202,14 +229,14 @@ class MobileNode():
         pi = self.node_storage.pi
         weight = self.node_storage.weight
         totalweight = self.node_storage.totalweight
-        _round = self.node_storage.N + 1
+        _round = self.node_storage.N
         sign_m = {'round': _round, 'step': _step, 'pi': pi,
                   'hprev': hprev, 'value': value, 'weight': weight, 'totalweight': totalweight}
         sig = signing(pickle.dumps(sign_m), sk)
         msg = message(public_key=pk, sig=sig,
                       msgtype='consensus', sign_msg=sign_m)
         # 随机生成priority
-        self.communicator.SendMsgBuffer.push(msg, random.randint(2, 10000))
+        self.communicator.SendMsgBuffer.push(msg, random.randint(5001, 10000))
 
     def CountVote(self, step):
         counts = {}
@@ -244,32 +271,43 @@ class MobileNode():
         else:
             # print('binaryBA中的countvote')
             to = True
+            start = time.time()
             while to:
-                start = time.time()
+                print(1)
+                start1 = time.time()
                 while self.communicator.RecvMsgBuffer.getLength() <= 0:
-                    if time.time() > start + config.EXPIRED_THRESHOLD:
+                    if time.time() > start1 + config.EXPIRED_THRESHOLD:
+                        print(2)
                         to = False
                         break
                     continue
                 if to:
+                    print(3)
                     m = self.communicator.RecvMsgBuffer.pop()
+                    print(4)
                     #  这一步是保证取出的msg是正确的round和step，若不是，则重新赋一个随机prority,push进去。
-                    if m[0].sign_msg['round'] != self.node_storage.N+1 or m[0].sign_msg['step'] != step:
+                    if m[0].type == 'reduction' or m[0].sign_msg['round'] != self.node_storage.N or m[0].sign_msg['step'] != step:
                         self.communicator.RecvMsgBuffer.push(m[0], 10001)
+                        print(5)
                         if time.time() > start + config.EXPIRED_THRESHOLD:
+                            print(6)
                             return 'timeout'
                         continue
+                    print(7)
                     votes, value = self.ProcessMsg(m[0])
                     # 投票先都为一票，与权重无关，不采用PoS
-                    votes = 1
+                    print(5)
                     if (m[0].pk_pem in voters) or votes == 0:
                         continue
+                    print(6)
                     voters.append(m[0].pk_pem)
                     # print(value)
                     if not value in counts:
+                        print(7)
                         counts[value] = votes
                         # print(counts)
                     else:
+                        print(8)
                         counts[value] = counts[value] + votes
                     count_ = sorted(counts.items(), key=lambda kv: (
                         kv[1], kv[0]), reverse=True)
@@ -300,22 +338,32 @@ class MobileNode():
         weight = sign_msg['weight']
         totalweight = sign_msg['totalweight']
         seed = str(_round) + hprev
-        if hprev != self.node_storage.previous_hash:
-            print('卡在这里了')
-            return 0, 0
-        votes = sortition.VerifySort(
-            pk, pi, seed, config.CANDIDATE, weight, totalweight)
+        # 正确流程是每个移动节点在进入共识之前请求当前区块的层数和previous_hash，再进行共识；
+        # 但这边省去了该步骤，直接让移动节点相信服务器的信息即可。
+        # self.node_storage.N = _round
+        # self.node_storage.previous_hash = hprev
+        # if hprev != self.node_storage.previous_hash:
+        #     print('卡在这里了')
+        #     return 0, 0
+
+        # 先不设置权重
+        # votes = sortition.VerifySort(
+        #     pk, pi, seed, config.CANDIDATE, weight, totalweight)
+        votes = 1
         return votes, value
 
     def BinaryBA(self, block_hash):
         # '00' means TIMEOUT '0'means emptyhash
-        time.sleep(6)
+        time.sleep(3)
         step = 1
         r = block_hash
         print('hblock is:', r)
         while step < config.MAXSTEP:
+            # print(0)
             self.CommitteeVote(step, r)
+            # print(1)
             r = self.CountVote(step)
+            # print(2)
             if r == 'timeout':
                 r = block_hash
             elif r != 'empty_block':
@@ -324,6 +372,7 @@ class MobileNode():
                 self.CommitteeVote(step+3, r)
                 if step == 1:
                     self.CommitteeVote(config.FINAL, r)
+                # print('end')
                 return r
             step = step + 1
 
@@ -348,43 +397,65 @@ class MobileNode():
             step = step + 1
 
     def BAstar(self):
+        self.consensus_flag = True
         logging.info('************Consensus begin*********')
+        print('consensus begin')
         self.communicator.RecvMsgBuffer = PriorityQueue()
+        print('Reduciton begin')
         hblock = self.Reduction()
+        print('Reduction end')
+        print('BinaryBA begin')
         hblock_star = self.BinaryBA(hblock)
+        print('BinaryBA end')
+        # print(1)
         # 检查是fianl/tentative共识,1:final,0:tentative
+        print('count vote begin')
         r = self.CountVote(config.FINAL)
+        print('count vote end')
+        # print(2)
         # 清空接受消息列表
         self.communicator.init_buffer()
         if hblock_star == r:
+            print('send result begin')
             msg = message(public_key=self.public_key, sig=signing(pickle.dumps({'consensus_block': hblock_star, 'votes': self.node_storage.votes}), self.private_key),
                           msgtype='final_consensus', sign_msg={'consensus_block': hblock_star, 'votes': self.node_storage.votes})
-
-            time.sleep(5)
             self.communicator.SendMsgBuffer.push(msg, 1)
             self.node_storage.previous_hash = hblock_star.decode()
-            self.node_storage.N = self.node_storage.N + 1
             logging.info('************Consensus end*********')
             logging.info('FINAL consensus is:')
             logging.info(hblock_star.decode())
-
+            print('send result end')
+            self.consensus_flag = False
+            print('consensus end')
         else:
+            print('send tentative consensus result')
             msg = message(public_key=self.public_key, sig=signing(pickle.dumps({'consensus_block': hblock_star, 'votes': self.node_storage.votes}), self.private_key),
                           msgtype='tentative_consensus', sign_msg={'consensus_block': hblock_star, 'votes': self.node_storage.votes})
             self.communicator.SendMsgBuffer.push(msg, 1)
+            self.node_storage.previous_hash = hblock_star.decode()
             logging.info('************Consensus end*********')
             logging.info('TENTATIVE consensus is:')
             logging.info(hblock_star.decode())
+            print('send result end')
+            self.consensus_flag = False
+            print('consensus end')
     '''
     交易块签名模块
     '''
 
     def signing_txblock(self):
-        while self.communicator.ProBlockMsgBuffer.getLength() <= 0:
+        self.txblock_flag = True
+        while True:
             while self.communicator.TxBlockBuffer.getLength() <= 0:
                 continue
             msg, priority = self.communicator.TxBlockBuffer.pop()
             txblock = msg.sign_msg
+            print('交易区块shard_length, ns_N:',
+                  txblock.shard_length, self.node_storage.N)
+            if txblock.shard_length > self.node_storage.N:
+                break
+            if txblock.shard_length < self.node_storage.N:
+                continue
             txblock.timestamp = int(time.time())
             txblock.set_publickey(self.public_key)
             txblock.set_sig(self.private_key)
@@ -392,6 +463,8 @@ class MobileNode():
                 txblock), self.private_key), msgtype='txblock_sig', sign_msg=txblock)
             self.communicator.SendMsgBuffer.push(
                 txblock_sig, random.randint(2, 10000))
+        self.txblock_flag = False
+
     '''
     交易验证模块（tee有效性证明的签名
     '''
@@ -399,20 +472,27 @@ class MobileNode():
     def signing_teeproof(self):
         # 该步骤需要验证不同tee的proof
         if self.node_storage.N >= 3:
-            while self.communicator.ProBlockMsgBuffer.getLength() <= 1:
+            self.teeproof_flag = True
+            while True:
                 while self.communicator.TeeProofBuffer.getLength() <= 0:
                     continue
                 msg, priority = self.communicator.TeeProofBuffer.pop()
-                print('收到了teeproof', msg)
+                print('收到的teeproof的位置，应该收到的位置：',
+                      msg.sign_msg['problock_num'], self.node_storage.N - 2)
+                if msg.sign_msg['problock_num'] > self.node_storage.N - 2:
+                    break
+                if msg.sign_msg['problock_num'] < self.node_storage.N - 2:
+                    continue
                 teepk = serialization.load_pem_public_key(msg.pk_pem)
                 if verification(public_key=teepk, sig=msg.sig, msg=pickle.dumps(msg.sign_msg)):
-                    print('teeproof有效！')
+                    print('验证teeproof: ', msg.sign_msg['txblock_num'])
                     sig = message(public_key=self.public_key, sig=signing(pickle.dumps(
                         msg.sign_msg), self.private_key), msgtype='proof_sig', sign_msg=msg.sign_msg)
                     self.communicator.SendMsgBuffer.push(
                         sig, random.randint(2, 10000))
                 else:
                     print('teeproof无效！')
+            self.teeproof_flag = False
 
     def main():
         return 0

@@ -23,8 +23,9 @@ import sys
 
 
 class Communicator():
-    def __init__(self, shard_id):
+    def __init__(self, shard_id, serverip):
         self.shard_id = shard_id
+        self.serverip = serverip
 
         # 发送接收移动节点gossip的消息buffer
         self.SendMsgBuffer = PriorityQueue()
@@ -42,6 +43,31 @@ class Communicator():
         # 5）接收交易区块验证proof
         self.TeeProofBuffer = PriorityQueue()
 
+        self.consensus_flag = False
+        self.problock_flag = False
+        self.txblock_flag = False
+        self.teeproof_flag = False
+
+        print("Connecting to server %s" % serverip)
+        self.socket1 = zmq.Context().socket(zmq.REQ)
+        self.socket1.connect('tcp://%s:5555' % serverip)
+
+        # self.socket2 = zmq.Context().socket(zmq.SUB)
+        # self.socket2.connect('tcp://%s:5565' % serverip)
+        # self.socket2.setsockopt_string(zmq.SUBSCRIBE, '')
+
+        # self.socket3 = zmq.Context().socket(zmq.SUB)
+        # self.socket3.connect('tcp://%s:5570' % serverip)
+        # self.socket3.setsockopt_string(zmq.SUBSCRIBE, '')
+
+        # self.socket4 = zmq.Context().socket(zmq.SUB)
+        # self.socket4.connect('tcp://%s:5575' % serverip)
+        # self.socket4.setsockopt_string(zmq.SUBSCRIBE, '')
+
+        # self.socket5 = zmq.Context().socket(zmq.SUB)
+        # self.socket5.connect('tcp://%s:5580' % serverip)
+        # self.socket5.setsockopt_string(zmq.SUBSCRIBE, '')
+
     def init_buffer(self):
         self.ProBlockMsgBuffer = PriorityQueue()
         self.TxBlockBuffer = PriorityQueue()
@@ -49,79 +75,41 @@ class Communicator():
         self.RecvMsgBuffer = PriorityQueue()
         self.SendMsgBuffer = PriorityQueue()
 
-    def send_msg(self, msg, ip):
-        context = zmq.Context()
-        # print("Connecting to server %s" % ip)
-        socket = context.socket(zmq.REQ)
-        socket.connect("tcp://%s:5555" % ip)
-        socket.send_pyobj(msg)
-        msg1 = socket.recv()
+    def send_msg(self, msg):
+        self.socket1.send_pyobj(msg)
+        msg1 = self.socket1.recv()
         # print(msg1)
 
-    def recv_msg(self, ip):
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        print("Collecting gossipmsg from server %s" % ip)
-        socket.connect("tcp://%s:5565" % ip)
-        while True:
-            msg = socket.recv_pyobj()
-            self.RecvMsgBuffer.push(msg[0], msg[1])
-            # print('recvmsgbuffer length is:', self.RecvMsgBuffer.getLength())
-            socket.send_string('Send successfully!')
+    def recv_msg(self):
+        # print(self.consensus_flag)
+        # if self.consensus_flag:
+        socket = zmq.Context().socket(zmq.SUB)
+        socket.connect('tcp://%s:5565' % self.serverip)
+        socket.setsockopt_string(zmq.SUBSCRIBE, '')
+        msg = socket.recv_pyobj()
+        self.RecvMsgBuffer.push(msg[0], msg[1])
 
-    def recv_problock_msg(self, ip):
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        print("Collecting problockmsg from server %s" % ip)
-        socket.connect("tcp://%s:5570" % ip)
-        while True:
-            msg = socket.recv_pyobj()
-            self.ProBlockMsgBuffer.push(msg[0], msg[1])
-            socket.send_string('Send successfully!')
+    def recv_problock_msg(self):
+        # print('当前problockmsgbuffer中的数量为', self.ProBlockMsgBuffer.getLength())
+        # if self.problock_flag:
+        socket = zmq.Context().socket(zmq.SUB)
+        socket.connect('tcp://%s:5570' % self.serverip)
+        socket.setsockopt_string(zmq.SUBSCRIBE, '')
+        msg = socket.recv_pyobj()
+        self.ProBlockMsgBuffer.push(msg[0], msg[1])
 
-    def recv_txblock_msg(self, ip):
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        print("Collecting txblock from server %s" % ip)
-        socket.connect("tcp://%s:5575" % ip)
-        while True:
-            msg = socket.recv_pyobj()
-            self.TxBlockBuffer.push(msg[0], msg[1])
-            socket.send_string('Send successfully!')
+    def recv_txblock_msg(self):
+        # if self.txblock_flag:
+        socket = zmq.Context().socket(zmq.SUB)
+        socket.connect('tcp://%s:5575' % self.serverip)
+        socket.setsockopt_string(zmq.SUBSCRIBE, '')
+        msg = socket.recv_pyobj()
+        self.TxBlockBuffer.push(msg[0], msg[1])
 
-    def recv_TeeProof_msg(self, ip):
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        print("Collecting teeproof from server %s" % ip)
-        socket.connect("tcp://%s:5580" % ip)
-        while True:
-            msg = socket.recv_pyobj()
-            self.TeeProofBuffer.push(msg[0], msg[1])
-            socket.send_string('Send successfully!')
-    # def send_result(self, msg, ip):
-    #     context = zmq.Context()
-    #     socket = context.socket(zmq.REQ)
-    #     socket.connect("tcp://%s:5575" % ip)
-    #     pem = msg[0]
-    #     sig = msg[1]
-    #     sign_m = msg[2]
-    #     print("sending vote: ", sign_m)
-    #     socket.send_multipart((pem, sig, sign_m))
-    #     msg1 = socket.recv()
-    #     print(msg1)
-    # pem, sig, msg = socket.recv_multipart()
-    # tmq = pem
-    # while True:
-    #     if time.time() - start > 10:
-    #         break
-    #     else:
-    #         start = time.time()
-
-    # print("recv vote from server ...")
-    # pem, sig, msg = socket.recv_multipart()
-    # return pem, sig, msg
-    # start = time.time()
-    # if tmq == pem:
-    #     continue
-    # else:
-    #     tmp = pem
+    def recv_TeeProof_msg(self):
+        # if self.teeproof_flag:
+        socket = zmq.Context().socket(zmq.SUB)
+        socket.connect('tcp://%s:5580' % self.serverip)
+        socket.setsockopt_string(zmq.SUBSCRIBE, '')
+        msg = socket.recv_pyobj()
+        self.TeeProofBuffer.push(msg[0], msg[1])
