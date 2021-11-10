@@ -4,8 +4,8 @@
 
 import zmq  # 用于移动节点和边缘节点的通信
 from cryptography.hazmat.primitives import serialization
-from zmq.sugar import context, socket
-from zmq.sugar.constants import socket_types
+# from zmq.sugar import context, socket
+# from zmq.sugar.constants import socket_types
 from rsa_sign import *
 from message import message
 from util import PriorityQueue
