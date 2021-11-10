@@ -152,10 +152,10 @@ class Thread9(threading.Thread):
 
 
 def main():
-    serverip = '172.19.5.8'
+    serverip = '192.168.199.102'
     # serverip1 = '10.211.55.4'
 
-    node = MobileNode('172.19.5.8', 1, 2, 1, serverip)
+    node = MobileNode('192.168.199.102', 1, 2, 1, serverip)
     node.node_storage.set_N(0)
 
     thread1 = Thread1(node)

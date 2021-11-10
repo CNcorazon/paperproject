@@ -2,12 +2,14 @@
 区块类
 """
 
+from zmq import backend
 from rsa_sign import signing
 import hashlib
 import random
 import sys
 import ecdsa
 from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.backends import default_backend
 
 
 class ProBlock:
@@ -86,7 +88,7 @@ class TxBlock():
         )
 
     def get_publickey(self):
-        return serialization.load_pem_public_key(self.pk_pem,)
+        return serialization.load_pem_public_key(self.pk_pem, default_backend())
 
     # def get_header_str(self):
     #     shard_data = str(self.shard_id) + str(self.shard_length)

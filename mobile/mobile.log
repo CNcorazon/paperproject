@@ -1,409 +1,296 @@
-09-Nov-21 19:56:20 - ************Consensus begin*********
-09-Nov-21 19:56:20 - ************begin reduction************
-09-Nov-21 19:56:26 - ************reduction end************
-09-Nov-21 19:56:26 - hblock is:
-09-Nov-21 19:56:26 - d579f1c58d5e38dff6a53a22a840991547b1e84909700cc93ccfd875ec27e118
-09-Nov-21 19:56:30 - ************Consensus end*********
-09-Nov-21 19:56:30 - FINAL consensus is:
-09-Nov-21 19:56:30 - d579f1c58d5e38dff6a53a22a840991547b1e84909700cc93ccfd875ec27e118
-09-Nov-21 19:57:16 - ************Consensus begin*********
-09-Nov-21 19:57:16 - ************begin reduction************
-09-Nov-21 19:57:21 - ************reduction end************
-09-Nov-21 19:57:21 - hblock is:
-09-Nov-21 19:57:21 - 92e2cfb666de399b211daffd95a31505f3cf03a6dd6771dec5c617c0754282d1
-09-Nov-21 19:57:25 - ************Consensus end*********
-09-Nov-21 19:57:25 - FINAL consensus is:
-09-Nov-21 19:57:25 - 92e2cfb666de399b211daffd95a31505f3cf03a6dd6771dec5c617c0754282d1
-09-Nov-21 19:58:13 - ************Consensus begin*********
-09-Nov-21 19:58:13 - ************begin reduction************
-09-Nov-21 19:58:18 - ************reduction end************
-09-Nov-21 19:58:18 - hblock is:
-09-Nov-21 19:58:18 - 9ccdad4df1558c5ea7e7468f71d8d26506618e49aa761c17c57705395f5fb9af
-09-Nov-21 19:58:22 - ************Consensus end*********
-09-Nov-21 19:58:22 - FINAL consensus is:
-09-Nov-21 19:58:22 - 9ccdad4df1558c5ea7e7468f71d8d26506618e49aa761c17c57705395f5fb9af
-09-Nov-21 19:59:09 - ************Consensus begin*********
-09-Nov-21 19:59:09 - ************begin reduction************
-09-Nov-21 19:59:14 - ************reduction end************
-09-Nov-21 19:59:14 - hblock is:
-09-Nov-21 19:59:14 - 6d0dd9caae25c8d70fedea245bf2635e9e57480b9b404c2dcdfc2fd9d79ebac3
-09-Nov-21 19:59:18 - ************Consensus end*********
-09-Nov-21 19:59:18 - FINAL consensus is:
-09-Nov-21 19:59:18 - 6d0dd9caae25c8d70fedea245bf2635e9e57480b9b404c2dcdfc2fd9d79ebac3
-09-Nov-21 20:00:07 - ************Consensus begin*********
-09-Nov-21 20:00:07 - ************begin reduction************
-09-Nov-21 20:00:12 - ************reduction end************
-09-Nov-21 20:00:12 - hblock is:
-09-Nov-21 20:00:12 - cb9d9fbfbb209c7bc2c167a188b120f4ee5ac2770346c07ae80929340b56f7b4
-09-Nov-21 20:00:16 - ************Consensus end*********
-09-Nov-21 20:00:16 - FINAL consensus is:
-09-Nov-21 20:00:16 - cb9d9fbfbb209c7bc2c167a188b120f4ee5ac2770346c07ae80929340b56f7b4
-09-Nov-21 20:01:03 - ************Consensus begin*********
-09-Nov-21 20:01:03 - ************begin reduction************
-09-Nov-21 20:01:08 - ************reduction end************
-09-Nov-21 20:01:08 - hblock is:
-09-Nov-21 20:01:08 - a5bb02e5dcf180889723581f92cc92b03e955fd6570fbdda955b5794365be9b4
-09-Nov-21 20:01:12 - ************Consensus end*********
-09-Nov-21 20:01:12 - FINAL consensus is:
-09-Nov-21 20:01:12 - a5bb02e5dcf180889723581f92cc92b03e955fd6570fbdda955b5794365be9b4
-09-Nov-21 20:02:00 - ************Consensus begin*********
-09-Nov-21 20:02:00 - ************begin reduction************
-09-Nov-21 20:02:06 - ************reduction end************
-09-Nov-21 20:02:06 - hblock is:
-09-Nov-21 20:02:06 - aa915a346831337a6e93f5b44deeef534c3f269e242995c2a955ea42eb78fc6b
-09-Nov-21 20:02:09 - ************Consensus end*********
-09-Nov-21 20:02:09 - FINAL consensus is:
-09-Nov-21 20:02:09 - aa915a346831337a6e93f5b44deeef534c3f269e242995c2a955ea42eb78fc6b
-09-Nov-21 20:02:57 - ************Consensus begin*********
-09-Nov-21 20:02:57 - ************begin reduction************
-09-Nov-21 20:03:03 - ************reduction end************
-09-Nov-21 20:03:03 - hblock is:
-09-Nov-21 20:03:03 - 23129a0d1666c562a25838406f5521a90d85d65768f9779fccf17f1f80a94fce
-09-Nov-21 20:03:07 - ************Consensus end*********
-09-Nov-21 20:03:07 - FINAL consensus is:
-09-Nov-21 20:03:07 - 23129a0d1666c562a25838406f5521a90d85d65768f9779fccf17f1f80a94fce
-09-Nov-21 20:03:55 - ************Consensus begin*********
-09-Nov-21 20:03:55 - ************begin reduction************
-09-Nov-21 20:04:00 - ************reduction end************
-09-Nov-21 20:04:00 - hblock is:
-09-Nov-21 20:04:00 - d968df45ca935f36fa1be99ecf95be82fe09cf21871765ca9d62423a422a0994
-09-Nov-21 20:04:03 - ************Consensus end*********
-09-Nov-21 20:04:03 - FINAL consensus is:
-09-Nov-21 20:04:03 - d968df45ca935f36fa1be99ecf95be82fe09cf21871765ca9d62423a422a0994
-09-Nov-21 20:04:51 - ************Consensus begin*********
-09-Nov-21 20:04:51 - ************begin reduction************
-09-Nov-21 20:04:57 - ************reduction end************
-09-Nov-21 20:04:57 - hblock is:
-09-Nov-21 20:04:57 - 4e301c4cbe3f9eb8eab0939972788364f0b780793aeab49c515fff07822be047
-09-Nov-21 20:05:00 - ************Consensus end*********
-09-Nov-21 20:05:00 - FINAL consensus is:
-09-Nov-21 20:05:00 - 4e301c4cbe3f9eb8eab0939972788364f0b780793aeab49c515fff07822be047
-09-Nov-21 20:05:47 - ************Consensus begin*********
-09-Nov-21 20:05:47 - ************begin reduction************
-09-Nov-21 20:05:53 - ************reduction end************
-09-Nov-21 20:05:53 - hblock is:
-09-Nov-21 20:05:53 - 243671fdd33c5daa5bbbd04a209e908c446a6effd5dbbfe48a1eaeac568563dc
-09-Nov-21 20:05:56 - ************Consensus end*********
-09-Nov-21 20:05:56 - FINAL consensus is:
-09-Nov-21 20:05:56 - 243671fdd33c5daa5bbbd04a209e908c446a6effd5dbbfe48a1eaeac568563dc
-09-Nov-21 20:06:43 - ************Consensus begin*********
-09-Nov-21 20:06:43 - ************begin reduction************
-09-Nov-21 20:06:49 - ************reduction end************
-09-Nov-21 20:06:49 - hblock is:
-09-Nov-21 20:06:49 - 17355380be51273930d53ad1f45aaedccf8361933fec4fe281e6001a825770f9
-09-Nov-21 20:06:53 - ************Consensus end*********
-09-Nov-21 20:06:53 - FINAL consensus is:
-09-Nov-21 20:06:53 - 17355380be51273930d53ad1f45aaedccf8361933fec4fe281e6001a825770f9
-09-Nov-21 20:07:41 - ************Consensus begin*********
-09-Nov-21 20:07:41 - ************begin reduction************
-09-Nov-21 20:07:46 - ************reduction end************
-09-Nov-21 20:07:46 - hblock is:
-09-Nov-21 20:07:46 - 9a298bc7e8f55137b5147e962834d1eba652699dee18649815fdb9691569c51c
-09-Nov-21 20:07:50 - ************Consensus end*********
-09-Nov-21 20:07:50 - FINAL consensus is:
-09-Nov-21 20:07:50 - 9a298bc7e8f55137b5147e962834d1eba652699dee18649815fdb9691569c51c
-09-Nov-21 20:08:36 - ************Consensus begin*********
-09-Nov-21 20:08:36 - ************begin reduction************
-09-Nov-21 20:08:42 - ************reduction end************
-09-Nov-21 20:08:42 - hblock is:
-09-Nov-21 20:08:42 - 293c07b7820c68806bfd4d2bd95ff5878bd91c40390d52ce4d5b0360f79d70c8
-09-Nov-21 20:08:46 - ************Consensus end*********
-09-Nov-21 20:08:46 - FINAL consensus is:
-09-Nov-21 20:08:46 - 293c07b7820c68806bfd4d2bd95ff5878bd91c40390d52ce4d5b0360f79d70c8
-09-Nov-21 20:09:33 - ************Consensus begin*********
-09-Nov-21 20:09:33 - ************begin reduction************
-09-Nov-21 20:09:39 - ************reduction end************
-09-Nov-21 20:09:39 - hblock is:
-09-Nov-21 20:09:39 - f4a43e53e63ed3e58d22781a1606a4961c9eec6206dc15a21ea6d96b1becb96a
-09-Nov-21 20:09:42 - ************Consensus end*********
-09-Nov-21 20:09:42 - FINAL consensus is:
-09-Nov-21 20:09:42 - f4a43e53e63ed3e58d22781a1606a4961c9eec6206dc15a21ea6d96b1becb96a
-09-Nov-21 20:10:30 - ************Consensus begin*********
-09-Nov-21 20:10:30 - ************begin reduction************
-09-Nov-21 20:10:35 - ************reduction end************
-09-Nov-21 20:10:35 - hblock is:
-09-Nov-21 20:10:35 - 6a6ccf81db99233ee4380c88036ee04ccf2a0500a80f0b0a8cc7d4b1fafc1a83
-09-Nov-21 20:10:39 - ************Consensus end*********
-09-Nov-21 20:10:39 - FINAL consensus is:
-09-Nov-21 20:10:39 - 6a6ccf81db99233ee4380c88036ee04ccf2a0500a80f0b0a8cc7d4b1fafc1a83
-09-Nov-21 20:11:25 - ************Consensus begin*********
-09-Nov-21 20:11:25 - ************begin reduction************
-09-Nov-21 20:11:31 - ************reduction end************
-09-Nov-21 20:11:31 - hblock is:
-09-Nov-21 20:11:31 - 919b8c8241de7ba6d1851592effffd5c8d01264a34de2fc44842164b14d7be34
-09-Nov-21 20:11:34 - ************Consensus end*********
-09-Nov-21 20:11:34 - FINAL consensus is:
-09-Nov-21 20:11:34 - 919b8c8241de7ba6d1851592effffd5c8d01264a34de2fc44842164b14d7be34
-09-Nov-21 20:12:22 - ************Consensus begin*********
-09-Nov-21 20:12:22 - ************begin reduction************
-09-Nov-21 20:12:27 - ************reduction end************
-09-Nov-21 20:12:27 - hblock is:
-09-Nov-21 20:12:27 - f9a405bc676c9fdce5e92b077cb35c0a2a08807cd960bb074acd6f7893a1da01
-09-Nov-21 20:12:31 - ************Consensus end*********
-09-Nov-21 20:12:31 - FINAL consensus is:
-09-Nov-21 20:12:31 - f9a405bc676c9fdce5e92b077cb35c0a2a08807cd960bb074acd6f7893a1da01
-09-Nov-21 20:13:19 - ************Consensus begin*********
-09-Nov-21 20:13:19 - ************begin reduction************
-09-Nov-21 20:13:25 - ************reduction end************
-09-Nov-21 20:13:25 - hblock is:
-09-Nov-21 20:13:25 - 007831407ee217eba2278c1192324c0c20cdad81e7196f558847cadd151dd904
-09-Nov-21 20:13:29 - ************Consensus end*********
-09-Nov-21 20:13:29 - FINAL consensus is:
-09-Nov-21 20:13:29 - 007831407ee217eba2278c1192324c0c20cdad81e7196f558847cadd151dd904
-09-Nov-21 20:14:17 - ************Consensus begin*********
-09-Nov-21 20:14:17 - ************begin reduction************
-09-Nov-21 20:14:23 - ************reduction end************
-09-Nov-21 20:14:23 - hblock is:
-09-Nov-21 20:14:23 - 2c5af3000ecc755784a99c9258c659249ac7a8d2230630b5b686b903bf5ee7f7
-09-Nov-21 20:14:26 - ************Consensus end*********
-09-Nov-21 20:14:26 - FINAL consensus is:
-09-Nov-21 20:14:26 - 2c5af3000ecc755784a99c9258c659249ac7a8d2230630b5b686b903bf5ee7f7
-09-Nov-21 20:15:15 - ************Consensus begin*********
-09-Nov-21 20:15:15 - ************begin reduction************
-09-Nov-21 20:15:20 - ************reduction end************
-09-Nov-21 20:15:20 - hblock is:
-09-Nov-21 20:15:20 - 137cdff4baa198fbf22e5cd78531d7e37667aefc5df7387fb74b04bf793a4292
-09-Nov-21 20:15:25 - ************Consensus end*********
-09-Nov-21 20:15:25 - FINAL consensus is:
-09-Nov-21 20:15:25 - 137cdff4baa198fbf22e5cd78531d7e37667aefc5df7387fb74b04bf793a4292
-09-Nov-21 20:16:11 - ************Consensus begin*********
-09-Nov-21 20:16:11 - ************begin reduction************
-09-Nov-21 20:16:17 - ************reduction end************
-09-Nov-21 20:16:17 - hblock is:
-09-Nov-21 20:16:17 - 7e5ee8261c81595920dad29c357202ee369a0839039724f6be0d30af8c30462b
-09-Nov-21 20:16:20 - ************Consensus end*********
-09-Nov-21 20:16:20 - FINAL consensus is:
-09-Nov-21 20:16:20 - 7e5ee8261c81595920dad29c357202ee369a0839039724f6be0d30af8c30462b
-09-Nov-21 20:17:08 - ************Consensus begin*********
-09-Nov-21 20:17:08 - ************begin reduction************
-09-Nov-21 20:17:13 - ************reduction end************
-09-Nov-21 20:17:13 - hblock is:
-09-Nov-21 20:17:13 - f6015def99c2f541b0e7b66563406a8614223a3ec4a15ed56a94e4ddea5f62ce
-09-Nov-21 20:17:17 - ************Consensus end*********
-09-Nov-21 20:17:17 - FINAL consensus is:
-09-Nov-21 20:17:17 - f6015def99c2f541b0e7b66563406a8614223a3ec4a15ed56a94e4ddea5f62ce
-09-Nov-21 20:18:05 - ************Consensus begin*********
-09-Nov-21 20:18:05 - ************begin reduction************
-09-Nov-21 20:18:10 - ************reduction end************
-09-Nov-21 20:18:10 - hblock is:
-09-Nov-21 20:18:10 - 22685893806723774a0e07c33b606812cacf36500666a291be6ad6c397269b5b
-09-Nov-21 20:18:14 - ************Consensus end*********
-09-Nov-21 20:18:14 - FINAL consensus is:
-09-Nov-21 20:18:14 - 22685893806723774a0e07c33b606812cacf36500666a291be6ad6c397269b5b
-09-Nov-21 20:19:02 - ************Consensus begin*********
-09-Nov-21 20:19:02 - ************begin reduction************
-09-Nov-21 20:19:08 - ************reduction end************
-09-Nov-21 20:19:08 - hblock is:
-09-Nov-21 20:19:08 - 637193ede86beb27e6ed97ec0d19872e98575d2ada87c29626214fcf4437d104
-09-Nov-21 20:19:11 - ************Consensus end*********
-09-Nov-21 20:19:11 - FINAL consensus is:
-09-Nov-21 20:19:11 - 637193ede86beb27e6ed97ec0d19872e98575d2ada87c29626214fcf4437d104
-09-Nov-21 20:19:59 - ************Consensus begin*********
-09-Nov-21 20:19:59 - ************begin reduction************
-09-Nov-21 20:20:05 - ************reduction end************
-09-Nov-21 20:20:05 - hblock is:
-09-Nov-21 20:20:05 - e737302181a0c52b29e06e9003109a2d066fdf3d0b619f767fc8b8769f70728c
-09-Nov-21 20:20:08 - ************Consensus end*********
-09-Nov-21 20:20:08 - FINAL consensus is:
-09-Nov-21 20:20:08 - e737302181a0c52b29e06e9003109a2d066fdf3d0b619f767fc8b8769f70728c
-09-Nov-21 20:20:56 - ************Consensus begin*********
-09-Nov-21 20:20:56 - ************begin reduction************
-09-Nov-21 20:21:02 - ************reduction end************
-09-Nov-21 20:21:02 - hblock is:
-09-Nov-21 20:21:02 - 0bcb1988b467edcbb3dba7a4011cfdd4fa8aa70fc7aa840fe872765a171bed0b
-09-Nov-21 20:21:06 - ************Consensus end*********
-09-Nov-21 20:21:06 - FINAL consensus is:
-09-Nov-21 20:21:06 - 0bcb1988b467edcbb3dba7a4011cfdd4fa8aa70fc7aa840fe872765a171bed0b
-09-Nov-21 20:21:53 - ************Consensus begin*********
-09-Nov-21 20:21:53 - ************begin reduction************
-09-Nov-21 20:21:58 - ************reduction end************
-09-Nov-21 20:21:58 - hblock is:
-09-Nov-21 20:21:58 - fc334b24017a468ecb7a9f32331aa86e279616f244f15ab7e9a2ae8a411857a7
-09-Nov-21 20:22:02 - ************Consensus end*********
-09-Nov-21 20:22:02 - FINAL consensus is:
-09-Nov-21 20:22:02 - fc334b24017a468ecb7a9f32331aa86e279616f244f15ab7e9a2ae8a411857a7
-09-Nov-21 20:22:49 - ************Consensus begin*********
-09-Nov-21 20:22:49 - ************begin reduction************
-09-Nov-21 20:22:55 - ************reduction end************
-09-Nov-21 20:22:55 - hblock is:
-09-Nov-21 20:22:55 - e495c49e3feff5d83d07061055b42430362bb831163f5e58dd2fabb102bc417f
-09-Nov-21 20:22:58 - ************Consensus end*********
-09-Nov-21 20:22:58 - FINAL consensus is:
-09-Nov-21 20:22:58 - e495c49e3feff5d83d07061055b42430362bb831163f5e58dd2fabb102bc417f
-09-Nov-21 20:23:45 - ************Consensus begin*********
-09-Nov-21 20:23:45 - ************begin reduction************
-09-Nov-21 20:23:51 - ************reduction end************
-09-Nov-21 20:23:51 - hblock is:
-09-Nov-21 20:23:51 - df9ebe21d914250bbdcabfad7241d5bd75f91397361594e3ab805b8dd74f6d47
-09-Nov-21 20:23:54 - ************Consensus end*********
-09-Nov-21 20:23:54 - FINAL consensus is:
-09-Nov-21 20:23:54 - df9ebe21d914250bbdcabfad7241d5bd75f91397361594e3ab805b8dd74f6d47
-09-Nov-21 20:24:43 - ************Consensus begin*********
-09-Nov-21 20:24:43 - ************begin reduction************
-09-Nov-21 20:24:49 - ************reduction end************
-09-Nov-21 20:24:49 - hblock is:
-09-Nov-21 20:24:49 - bb75499ebd10f050da37c81e2e8060c204e7a6254c544e5dca7aa170aec8adfe
-09-Nov-21 20:24:53 - ************Consensus end*********
-09-Nov-21 20:24:53 - FINAL consensus is:
-09-Nov-21 20:24:53 - bb75499ebd10f050da37c81e2e8060c204e7a6254c544e5dca7aa170aec8adfe
-09-Nov-21 20:25:43 - ************Consensus begin*********
-09-Nov-21 20:25:43 - ************begin reduction************
-09-Nov-21 20:25:48 - ************reduction end************
-09-Nov-21 20:25:48 - hblock is:
-09-Nov-21 20:25:48 - f4ca341ce2d8629354a741c849763853165a4aef419bc4256f6121564ff54e64
-09-Nov-21 20:25:53 - ************Consensus end*********
-09-Nov-21 20:25:53 - FINAL consensus is:
-09-Nov-21 20:25:53 - f4ca341ce2d8629354a741c849763853165a4aef419bc4256f6121564ff54e64
-09-Nov-21 20:26:41 - ************Consensus begin*********
-09-Nov-21 20:26:41 - ************begin reduction************
-09-Nov-21 20:26:47 - ************reduction end************
-09-Nov-21 20:26:47 - hblock is:
-09-Nov-21 20:26:47 - d9fbebd4aa632d86a7c7307cdfb397bc7c45b44d16b757b93223555c559f1c1a
-09-Nov-21 20:26:50 - ************Consensus end*********
-09-Nov-21 20:26:50 - FINAL consensus is:
-09-Nov-21 20:26:50 - d9fbebd4aa632d86a7c7307cdfb397bc7c45b44d16b757b93223555c559f1c1a
-09-Nov-21 20:27:39 - ************Consensus begin*********
-09-Nov-21 20:27:39 - ************begin reduction************
-09-Nov-21 20:27:44 - ************reduction end************
-09-Nov-21 20:27:44 - hblock is:
-09-Nov-21 20:27:44 - 40f0b52c873bf64a3e18afd5ce6a33d203e5b96db36aef0941b97e536dff1bf8
-09-Nov-21 20:27:48 - ************Consensus end*********
-09-Nov-21 20:27:48 - FINAL consensus is:
-09-Nov-21 20:27:48 - 40f0b52c873bf64a3e18afd5ce6a33d203e5b96db36aef0941b97e536dff1bf8
-09-Nov-21 20:28:35 - ************Consensus begin*********
-09-Nov-21 20:28:35 - ************begin reduction************
-09-Nov-21 20:28:41 - ************reduction end************
-09-Nov-21 20:28:41 - hblock is:
-09-Nov-21 20:28:41 - a57116a6494ab1b83e1fca527dca7b483a55f3248bb7c2eeb65fd6c802d0abe5
-09-Nov-21 20:28:45 - ************Consensus end*********
-09-Nov-21 20:28:45 - FINAL consensus is:
-09-Nov-21 20:28:45 - a57116a6494ab1b83e1fca527dca7b483a55f3248bb7c2eeb65fd6c802d0abe5
-09-Nov-21 20:29:34 - ************Consensus begin*********
-09-Nov-21 20:29:34 - ************begin reduction************
-09-Nov-21 20:29:39 - ************reduction end************
-09-Nov-21 20:29:39 - hblock is:
-09-Nov-21 20:29:39 - 73a59ee8d87000751b3e81a8dbf12c1a1209361c0ab666921113a6af2b1bfb36
-09-Nov-21 20:29:43 - ************Consensus end*********
-09-Nov-21 20:29:43 - FINAL consensus is:
-09-Nov-21 20:29:43 - 73a59ee8d87000751b3e81a8dbf12c1a1209361c0ab666921113a6af2b1bfb36
-09-Nov-21 20:30:31 - ************Consensus begin*********
-09-Nov-21 20:30:31 - ************begin reduction************
-09-Nov-21 20:30:37 - ************reduction end************
-09-Nov-21 20:30:37 - hblock is:
-09-Nov-21 20:30:37 - d064c302c57a9d6e4219538181e0a3234da1b61722ebcb4787251b9d1ce90ed2
-09-Nov-21 20:30:40 - ************Consensus end*********
-09-Nov-21 20:30:40 - FINAL consensus is:
-09-Nov-21 20:30:40 - d064c302c57a9d6e4219538181e0a3234da1b61722ebcb4787251b9d1ce90ed2
-09-Nov-21 20:31:29 - ************Consensus begin*********
-09-Nov-21 20:31:29 - ************begin reduction************
-09-Nov-21 20:31:35 - ************reduction end************
-09-Nov-21 20:31:35 - hblock is:
-09-Nov-21 20:31:35 - 816230853f86f94cc9326d425e7768a9826dab55a40eebe340eba4efe724c3d7
-09-Nov-21 20:31:39 - ************Consensus end*********
-09-Nov-21 20:31:39 - FINAL consensus is:
-09-Nov-21 20:31:39 - 816230853f86f94cc9326d425e7768a9826dab55a40eebe340eba4efe724c3d7
-09-Nov-21 20:32:26 - ************Consensus begin*********
-09-Nov-21 20:32:26 - ************begin reduction************
-09-Nov-21 20:32:31 - ************reduction end************
-09-Nov-21 20:32:31 - hblock is:
-09-Nov-21 20:32:32 - d4600d7403fa9522831603d45ff8b7b9667659b3427fe0ab66d23c8385905092
-09-Nov-21 20:32:35 - ************Consensus end*********
-09-Nov-21 20:32:35 - FINAL consensus is:
-09-Nov-21 20:32:35 - d4600d7403fa9522831603d45ff8b7b9667659b3427fe0ab66d23c8385905092
-09-Nov-21 20:33:23 - ************Consensus begin*********
-09-Nov-21 20:33:23 - ************begin reduction************
-09-Nov-21 20:33:29 - ************reduction end************
-09-Nov-21 20:33:29 - hblock is:
-09-Nov-21 20:33:29 - 9fdd3e3af61c1ad587c84d1eb6702301eb5c47119776ce17603aa9dd8c61fcc4
-09-Nov-21 20:33:32 - ************Consensus end*********
-09-Nov-21 20:33:32 - FINAL consensus is:
-09-Nov-21 20:33:32 - 9fdd3e3af61c1ad587c84d1eb6702301eb5c47119776ce17603aa9dd8c61fcc4
-09-Nov-21 20:34:19 - ************Consensus begin*********
-09-Nov-21 20:34:19 - ************begin reduction************
-09-Nov-21 20:34:25 - ************reduction end************
-09-Nov-21 20:34:25 - hblock is:
-09-Nov-21 20:34:25 - 5cc770dc5cfb847086cb1dd380fc7aa85bfe6eefbd971e4b0b29047e84067994
-09-Nov-21 20:34:28 - ************Consensus end*********
-09-Nov-21 20:34:28 - FINAL consensus is:
-09-Nov-21 20:34:28 - 5cc770dc5cfb847086cb1dd380fc7aa85bfe6eefbd971e4b0b29047e84067994
-09-Nov-21 20:35:17 - ************Consensus begin*********
-09-Nov-21 20:35:17 - ************begin reduction************
-09-Nov-21 20:35:23 - ************reduction end************
-09-Nov-21 20:35:23 - hblock is:
-09-Nov-21 20:35:23 - 39c4cd2eccb112065ab0586eeeb0fa2c55c5c288aa5efa22a5e4d3f85e0aac84
-09-Nov-21 20:35:26 - ************Consensus end*********
-09-Nov-21 20:35:26 - FINAL consensus is:
-09-Nov-21 20:35:26 - 39c4cd2eccb112065ab0586eeeb0fa2c55c5c288aa5efa22a5e4d3f85e0aac84
-09-Nov-21 20:36:13 - ************Consensus begin*********
-09-Nov-21 20:36:13 - ************begin reduction************
-09-Nov-21 20:36:19 - ************reduction end************
-09-Nov-21 20:36:19 - hblock is:
-09-Nov-21 20:36:19 - 9a7a0a58c5819ff3532fd4128f4aee14ead0ed7b9e9ae92be3c29d1e6b993853
-09-Nov-21 20:36:23 - ************Consensus end*********
-09-Nov-21 20:36:23 - FINAL consensus is:
-09-Nov-21 20:36:23 - 9a7a0a58c5819ff3532fd4128f4aee14ead0ed7b9e9ae92be3c29d1e6b993853
-09-Nov-21 20:37:12 - ************Consensus begin*********
-09-Nov-21 20:37:12 - ************begin reduction************
-09-Nov-21 20:37:17 - ************reduction end************
-09-Nov-21 20:37:17 - hblock is:
-09-Nov-21 20:37:17 - 985849594c910488d2ae178bb7352b578763a18f54ebc5d51fbf8debcd0db86b
-09-Nov-21 20:37:21 - ************Consensus end*********
-09-Nov-21 20:37:21 - FINAL consensus is:
-09-Nov-21 20:37:21 - 985849594c910488d2ae178bb7352b578763a18f54ebc5d51fbf8debcd0db86b
-09-Nov-21 20:38:10 - ************Consensus begin*********
-09-Nov-21 20:38:10 - ************begin reduction************
-09-Nov-21 20:38:15 - ************reduction end************
-09-Nov-21 20:38:15 - hblock is:
-09-Nov-21 20:38:15 - 5f57ccb18cff5514f8bd5e5240a6a8af91d6876bed77680c79251af8594fdc5f
-09-Nov-21 20:38:19 - ************Consensus end*********
-09-Nov-21 20:38:19 - FINAL consensus is:
-09-Nov-21 20:38:19 - 5f57ccb18cff5514f8bd5e5240a6a8af91d6876bed77680c79251af8594fdc5f
-09-Nov-21 20:39:05 - ************Consensus begin*********
-09-Nov-21 20:39:05 - ************begin reduction************
-09-Nov-21 20:39:11 - ************reduction end************
-09-Nov-21 20:39:11 - hblock is:
-09-Nov-21 20:39:11 - d66de4599726cce627c779af129e1780a2237dfe1eeb48cc1aa74f5ec11db3eb
-09-Nov-21 20:39:14 - ************Consensus end*********
-09-Nov-21 20:39:14 - FINAL consensus is:
-09-Nov-21 20:39:14 - d66de4599726cce627c779af129e1780a2237dfe1eeb48cc1aa74f5ec11db3eb
-09-Nov-21 20:40:00 - ************Consensus begin*********
-09-Nov-21 20:40:00 - ************begin reduction************
-09-Nov-21 20:40:06 - ************reduction end************
-09-Nov-21 20:40:06 - hblock is:
-09-Nov-21 20:40:06 - 6a333d326682cf7bd5df808948949574eb5d56c875d61f3dd61cf9d3fe78dbc8
-09-Nov-21 20:40:09 - ************Consensus end*********
-09-Nov-21 20:40:09 - FINAL consensus is:
-09-Nov-21 20:40:09 - 6a333d326682cf7bd5df808948949574eb5d56c875d61f3dd61cf9d3fe78dbc8
-09-Nov-21 20:40:59 - ************Consensus begin*********
-09-Nov-21 20:40:59 - ************begin reduction************
-09-Nov-21 20:41:05 - ************reduction end************
-09-Nov-21 20:41:05 - hblock is:
-09-Nov-21 20:41:05 - cb8d4fa3f7b24476a17a4b71345c906c4ad6c7390a2745f217f3c7cc01a7e744
-09-Nov-21 20:41:08 - ************Consensus end*********
-09-Nov-21 20:41:08 - FINAL consensus is:
-09-Nov-21 20:41:08 - cb8d4fa3f7b24476a17a4b71345c906c4ad6c7390a2745f217f3c7cc01a7e744
-09-Nov-21 20:41:58 - ************Consensus begin*********
-09-Nov-21 20:41:58 - ************begin reduction************
-09-Nov-21 20:42:03 - ************reduction end************
-09-Nov-21 20:42:03 - hblock is:
-09-Nov-21 20:42:03 - 0480cb473a1295be210a6702ba0c47a39e39ceb97e76537f9bc59e977c078fed
-09-Nov-21 20:42:07 - ************Consensus end*********
-09-Nov-21 20:42:07 - FINAL consensus is:
-09-Nov-21 20:42:07 - 0480cb473a1295be210a6702ba0c47a39e39ceb97e76537f9bc59e977c078fed
-09-Nov-21 20:42:54 - ************Consensus begin*********
-09-Nov-21 20:42:54 - ************begin reduction************
-09-Nov-21 20:43:00 - ************reduction end************
-09-Nov-21 20:43:00 - hblock is:
-09-Nov-21 20:43:00 - 247c9c4318664424a2b655fd32ca671548c48d9e20bd2c47d20d2d2a9de45f2d
-09-Nov-21 20:43:03 - ************Consensus end*********
-09-Nov-21 20:43:03 - FINAL consensus is:
-09-Nov-21 20:43:03 - 247c9c4318664424a2b655fd32ca671548c48d9e20bd2c47d20d2d2a9de45f2d
-09-Nov-21 20:43:51 - ************Consensus begin*********
-09-Nov-21 20:43:51 - ************begin reduction************
-09-Nov-21 20:43:57 - ************reduction end************
-09-Nov-21 20:43:57 - hblock is:
-09-Nov-21 20:43:57 - 5e7ecba00297f825a2120da06ae48ffe869539582c36394ddb232bbfcecf5abb
-09-Nov-21 20:44:00 - ************Consensus end*********
-09-Nov-21 20:44:00 - FINAL consensus is:
-09-Nov-21 20:44:00 - 5e7ecba00297f825a2120da06ae48ffe869539582c36394ddb232bbfcecf5abb
-ec1
+10-Nov-21 19:50:37 - ************Consensus begin*********
+10-Nov-21 19:50:37 - ************begin reduction************
+10-Nov-21 19:50:43 - ************reduction end************
+10-Nov-21 19:50:43 - hblock is:
+10-Nov-21 19:50:43 - bf6e235280b8396bb057cfadfa1f990ba3fc7e9dfad8e9aadc38d6b2ba9db14e
+10-Nov-21 19:50:47 - ************Consensus end*********
+10-Nov-21 19:50:47 - FINAL consensus is:
+10-Nov-21 19:50:47 - bf6e235280b8396bb057cfadfa1f990ba3fc7e9dfad8e9aadc38d6b2ba9db14e
+10-Nov-21 19:51:35 - ************Consensus begin*********
+10-Nov-21 19:51:35 - ************begin reduction************
+10-Nov-21 19:51:42 - ************reduction end************
+10-Nov-21 19:51:42 - hblock is:
+10-Nov-21 19:51:42 - 2d1d9be0aee01729639dda109f6e6e6c5067667405c55b550c5e9f517dfceac6
+10-Nov-21 19:51:45 - ************Consensus end*********
+10-Nov-21 19:51:45 - FINAL consensus is:
+10-Nov-21 19:51:45 - 2d1d9be0aee01729639dda109f6e6e6c5067667405c55b550c5e9f517dfceac6
+10-Nov-21 19:52:33 - ************Consensus begin*********
+10-Nov-21 19:52:33 - ************begin reduction************
+10-Nov-21 19:52:39 - ************reduction end************
+10-Nov-21 19:52:39 - hblock is:
+10-Nov-21 19:52:39 - a36475f4ac31a461ace7d61761c2da99a20ced733c798e0bd06d765f4bf79da6
+10-Nov-21 19:52:43 - ************Consensus end*********
+10-Nov-21 19:52:43 - FINAL consensus is:
+10-Nov-21 19:52:43 - a36475f4ac31a461ace7d61761c2da99a20ced733c798e0bd06d765f4bf79da6
+10-Nov-21 19:53:31 - ************Consensus begin*********
+10-Nov-21 19:53:31 - ************begin reduction************
+10-Nov-21 19:53:37 - ************reduction end************
+10-Nov-21 19:53:37 - hblock is:
+10-Nov-21 19:53:37 - f7bdd0a8141c1a67fbd2543755b88db1f21d1ba94518c0c22ae76d5f4a6bd42d
+10-Nov-21 19:53:41 - ************Consensus end*********
+10-Nov-21 19:53:41 - FINAL consensus is:
+10-Nov-21 19:53:41 - f7bdd0a8141c1a67fbd2543755b88db1f21d1ba94518c0c22ae76d5f4a6bd42d
+10-Nov-21 19:54:29 - ************Consensus begin*********
+10-Nov-21 19:54:29 - ************begin reduction************
+10-Nov-21 19:54:35 - ************reduction end************
+10-Nov-21 19:54:35 - hblock is:
+10-Nov-21 19:54:35 - 137f4223ebf447d0d294eee6a9a1266c9b3b8fcde6881ca636956454d2829433
+10-Nov-21 19:54:39 - ************Consensus end*********
+10-Nov-21 19:54:39 - FINAL consensus is:
+10-Nov-21 19:54:39 - 137f4223ebf447d0d294eee6a9a1266c9b3b8fcde6881ca636956454d2829433
+10-Nov-21 19:55:27 - ************Consensus begin*********
+10-Nov-21 19:55:27 - ************begin reduction************
+10-Nov-21 19:55:33 - ************reduction end************
+10-Nov-21 19:55:33 - hblock is:
+10-Nov-21 19:55:33 - 243a60b86e23169d4baa5ba087b28f81e95d1597709b97e9a578406c15645202
+10-Nov-21 19:55:37 - ************Consensus end*********
+10-Nov-21 19:55:37 - FINAL consensus is:
+10-Nov-21 19:55:37 - 243a60b86e23169d4baa5ba087b28f81e95d1597709b97e9a578406c15645202
+10-Nov-21 19:56:25 - ************Consensus begin*********
+10-Nov-21 19:56:25 - ************begin reduction************
+10-Nov-21 19:56:31 - ************reduction end************
+10-Nov-21 19:56:32 - hblock is:
+10-Nov-21 19:56:32 - b83bf647ea504d5e57d81f0dcbde4e0b0cb7fc4da462d1b6e5205c97e6acbbda
+10-Nov-21 19:56:35 - ************Consensus end*********
+10-Nov-21 19:56:36 - FINAL consensus is:
+10-Nov-21 19:56:36 - b83bf647ea504d5e57d81f0dcbde4e0b0cb7fc4da462d1b6e5205c97e6acbbda
+10-Nov-21 19:57:23 - ************Consensus begin*********
+10-Nov-21 19:57:23 - ************begin reduction************
+10-Nov-21 19:57:29 - ************reduction end************
+10-Nov-21 19:57:29 - hblock is:
+10-Nov-21 19:57:29 - d5fd4473b2f5a8bbdf97b6b62fb58ea3b85c880f5b024d7cc9e36e88f0b14af3
+10-Nov-21 19:57:33 - ************Consensus end*********
+10-Nov-21 19:57:33 - FINAL consensus is:
+10-Nov-21 19:57:33 - d5fd4473b2f5a8bbdf97b6b62fb58ea3b85c880f5b024d7cc9e36e88f0b14af3
+10-Nov-21 19:58:21 - ************Consensus begin*********
+10-Nov-21 19:58:21 - ************begin reduction************
+10-Nov-21 19:58:26 - ************reduction end************
+10-Nov-21 19:58:26 - hblock is:
+10-Nov-21 19:58:26 - 4275da58d22fdc9f58441f48c4227ce5b5cc3efcfb721da335efb6d2b6b2afdf
+10-Nov-21 19:58:30 - ************Consensus end*********
+10-Nov-21 19:58:30 - FINAL consensus is:
+10-Nov-21 19:58:30 - 4275da58d22fdc9f58441f48c4227ce5b5cc3efcfb721da335efb6d2b6b2afdf
+10-Nov-21 19:59:17 - ************Consensus begin*********
+10-Nov-21 19:59:17 - ************begin reduction************
+10-Nov-21 19:59:23 - ************reduction end************
+10-Nov-21 19:59:23 - hblock is:
+10-Nov-21 19:59:23 - cb3210903c177934c72653c525fffc54f640e8ecbdefdbce3b28b6410a732587
+10-Nov-21 19:59:27 - ************Consensus end*********
+10-Nov-21 19:59:27 - FINAL consensus is:
+10-Nov-21 19:59:27 - cb3210903c177934c72653c525fffc54f640e8ecbdefdbce3b28b6410a732587
+10-Nov-21 20:00:16 - ************Consensus begin*********
+10-Nov-21 20:00:16 - ************begin reduction************
+10-Nov-21 20:00:22 - ************reduction end************
+10-Nov-21 20:00:22 - hblock is:
+10-Nov-21 20:00:22 - 83b5f5b319428a9121ed1b9da4e2a4b6a24384fa51c43963e87235f162ad9450
+10-Nov-21 20:00:26 - ************Consensus end*********
+10-Nov-21 20:00:26 - FINAL consensus is:
+10-Nov-21 20:00:26 - 83b5f5b319428a9121ed1b9da4e2a4b6a24384fa51c43963e87235f162ad9450
+10-Nov-21 20:01:14 - ************Consensus begin*********
+10-Nov-21 20:01:14 - ************begin reduction************
+10-Nov-21 20:01:20 - ************reduction end************
+10-Nov-21 20:01:20 - hblock is:
+10-Nov-21 20:01:20 - 69155df2cb50d26be3ae8032e74042d1cf4490441c20d5909ead528a439d99ea
+10-Nov-21 20:01:24 - ************Consensus end*********
+10-Nov-21 20:01:24 - FINAL consensus is:
+10-Nov-21 20:01:24 - 69155df2cb50d26be3ae8032e74042d1cf4490441c20d5909ead528a439d99ea
+10-Nov-21 20:02:12 - ************Consensus begin*********
+10-Nov-21 20:02:12 - ************begin reduction************
+10-Nov-21 20:02:19 - ************reduction end************
+10-Nov-21 20:02:19 - hblock is:
+10-Nov-21 20:02:19 - 064f61b2d562e5e53da8d66af5cd9abd03667b936332f600270a2d99e3caa732
+10-Nov-21 20:02:22 - ************Consensus end*********
+10-Nov-21 20:02:22 - FINAL consensus is:
+10-Nov-21 20:02:22 - 064f61b2d562e5e53da8d66af5cd9abd03667b936332f600270a2d99e3caa732
+10-Nov-21 20:03:10 - ************Consensus begin*********
+10-Nov-21 20:03:10 - ************begin reduction************
+10-Nov-21 20:03:16 - ************reduction end************
+10-Nov-21 20:03:16 - hblock is:
+10-Nov-21 20:03:16 - 966ec8d9c150d3095feddfa93e17ba61ca4b7962e29a8dfbfdf9e9303a3d6356
+10-Nov-21 20:03:19 - ************Consensus end*********
+10-Nov-21 20:03:19 - FINAL consensus is:
+10-Nov-21 20:03:19 - 966ec8d9c150d3095feddfa93e17ba61ca4b7962e29a8dfbfdf9e9303a3d6356
+10-Nov-21 20:04:07 - ************Consensus begin*********
+10-Nov-21 20:04:07 - ************begin reduction************
+10-Nov-21 20:04:13 - ************reduction end************
+10-Nov-21 20:04:13 - hblock is:
+10-Nov-21 20:04:13 - c7ae632099947a64c6a34c49cf06945856ab2cccaaaf1c6c1789f634e30e4826
+10-Nov-21 20:04:17 - ************Consensus end*********
+10-Nov-21 20:04:17 - FINAL consensus is:
+10-Nov-21 20:04:17 - c7ae632099947a64c6a34c49cf06945856ab2cccaaaf1c6c1789f634e30e4826
+10-Nov-21 20:05:05 - ************Consensus begin*********
+10-Nov-21 20:05:05 - ************begin reduction************
+10-Nov-21 20:05:11 - ************reduction end************
+10-Nov-21 20:05:11 - hblock is:
+10-Nov-21 20:05:11 - 5d0521082fd0675011c9c37700913d75f443e94f122863d1d20d73669f265990
+10-Nov-21 20:05:15 - ************Consensus end*********
+10-Nov-21 20:05:15 - FINAL consensus is:
+10-Nov-21 20:05:15 - 5d0521082fd0675011c9c37700913d75f443e94f122863d1d20d73669f265990
+10-Nov-21 20:06:03 - ************Consensus begin*********
+10-Nov-21 20:06:03 - ************begin reduction************
+10-Nov-21 20:06:09 - ************reduction end************
+10-Nov-21 20:06:09 - hblock is:
+10-Nov-21 20:06:09 - 06407c7703579b6c0662fd14156c719539d1b504344cb7f71c7962fb171766bb
+10-Nov-21 20:06:13 - ************Consensus end*********
+10-Nov-21 20:06:13 - FINAL consensus is:
+10-Nov-21 20:06:13 - 06407c7703579b6c0662fd14156c719539d1b504344cb7f71c7962fb171766bb
+10-Nov-21 20:07:00 - ************Consensus begin*********
+10-Nov-21 20:07:00 - ************begin reduction************
+10-Nov-21 20:07:06 - ************reduction end************
+10-Nov-21 20:07:06 - hblock is:
+10-Nov-21 20:07:06 - 98e44f5d63d1a9306dc8e93b371583f1d5a0a92f52a92d7cc5d50359e0e1df71
+10-Nov-21 20:07:10 - ************Consensus end*********
+10-Nov-21 20:07:10 - FINAL consensus is:
+10-Nov-21 20:07:10 - 98e44f5d63d1a9306dc8e93b371583f1d5a0a92f52a92d7cc5d50359e0e1df71
+10-Nov-21 20:07:58 - ************Consensus begin*********
+10-Nov-21 20:07:58 - ************begin reduction************
+10-Nov-21 20:08:04 - ************reduction end************
+10-Nov-21 20:08:04 - hblock is:
+10-Nov-21 20:08:04 - 3dbec5417621b9415c2b1a7f293f1fe32b497e527ac5e06225694b38225afe9d
+10-Nov-21 20:08:08 - ************Consensus end*********
+10-Nov-21 20:08:08 - FINAL consensus is:
+10-Nov-21 20:08:08 - 3dbec5417621b9415c2b1a7f293f1fe32b497e527ac5e06225694b38225afe9d
+10-Nov-21 20:08:57 - ************Consensus begin*********
+10-Nov-21 20:08:57 - ************begin reduction************
+10-Nov-21 20:09:03 - ************reduction end************
+10-Nov-21 20:09:03 - hblock is:
+10-Nov-21 20:09:03 - cba8115d4f4eab44d7429da1f29b9e466cd9ab0748b76b09a81833ad005236bf
+10-Nov-21 20:09:06 - ************Consensus end*********
+10-Nov-21 20:09:06 - FINAL consensus is:
+10-Nov-21 20:09:06 - cba8115d4f4eab44d7429da1f29b9e466cd9ab0748b76b09a81833ad005236bf
+10-Nov-21 20:09:55 - ************Consensus begin*********
+10-Nov-21 20:09:55 - ************begin reduction************
+10-Nov-21 20:10:01 - ************reduction end************
+10-Nov-21 20:10:01 - hblock is:
+10-Nov-21 20:10:01 - db799c123806c455b2a329d5aa1475756b8151c0f587c04229a260b1cabe0826
+10-Nov-21 20:10:05 - ************Consensus end*********
+10-Nov-21 20:10:05 - FINAL consensus is:
+10-Nov-21 20:10:05 - db799c123806c455b2a329d5aa1475756b8151c0f587c04229a260b1cabe0826
+10-Nov-21 20:10:54 - ************Consensus begin*********
+10-Nov-21 20:10:54 - ************begin reduction************
+10-Nov-21 20:11:00 - ************reduction end************
+10-Nov-21 20:11:00 - hblock is:
+10-Nov-21 20:11:00 - b4f984b50cac0691675d25c12fd549420e84a76e41850c1ad7c4769d975c0cd4
+10-Nov-21 20:11:04 - ************Consensus end*********
+10-Nov-21 20:11:04 - FINAL consensus is:
+10-Nov-21 20:11:04 - b4f984b50cac0691675d25c12fd549420e84a76e41850c1ad7c4769d975c0cd4
+10-Nov-21 20:11:52 - ************Consensus begin*********
+10-Nov-21 20:11:52 - ************begin reduction************
+10-Nov-21 20:11:58 - ************reduction end************
+10-Nov-21 20:11:58 - hblock is:
+10-Nov-21 20:11:58 - 421e660a63d173e011a8117bfc2686c2722cd7173735a05879987151ce25a4ec
+10-Nov-21 20:12:02 - ************Consensus end*********
+10-Nov-21 20:12:02 - FINAL consensus is:
+10-Nov-21 20:12:02 - 421e660a63d173e011a8117bfc2686c2722cd7173735a05879987151ce25a4ec
+10-Nov-21 20:12:50 - ************Consensus begin*********
+10-Nov-21 20:12:50 - ************begin reduction************
+10-Nov-21 20:12:57 - ************reduction end************
+10-Nov-21 20:12:57 - hblock is:
+10-Nov-21 20:12:57 - 24677d10bd221bb3493f3edef7cd22d85acb86673bb6c68bd0e2dcc69164c4d1
+10-Nov-21 20:13:00 - ************Consensus end*********
+10-Nov-21 20:13:00 - FINAL consensus is:
+10-Nov-21 20:13:00 - 24677d10bd221bb3493f3edef7cd22d85acb86673bb6c68bd0e2dcc69164c4d1
+10-Nov-21 20:13:48 - ************Consensus begin*********
+10-Nov-21 20:13:48 - ************begin reduction************
+10-Nov-21 20:13:54 - ************reduction end************
+10-Nov-21 20:13:54 - hblock is:
+10-Nov-21 20:13:54 - a5ca1abdbc9d6f25e92d4a0da7c993033cf4f6b8416ef12600bab8588770be33
+10-Nov-21 20:13:57 - ************Consensus end*********
+10-Nov-21 20:13:57 - FINAL consensus is:
+10-Nov-21 20:13:57 - a5ca1abdbc9d6f25e92d4a0da7c993033cf4f6b8416ef12600bab8588770be33
+10-Nov-21 20:14:46 - ************Consensus begin*********
+10-Nov-21 20:14:46 - ************begin reduction************
+10-Nov-21 20:14:52 - ************reduction end************
+10-Nov-21 20:14:52 - hblock is:
+10-Nov-21 20:14:52 - a372bc24627f6096399870fb9a25a7c6418c26543c647efb455c69ea82fa6c0a
+10-Nov-21 20:14:55 - ************Consensus end*********
+10-Nov-21 20:14:55 - FINAL consensus is:
+10-Nov-21 20:14:55 - a372bc24627f6096399870fb9a25a7c6418c26543c647efb455c69ea82fa6c0a
+10-Nov-21 20:15:44 - ************Consensus begin*********
+10-Nov-21 20:15:44 - ************begin reduction************
+10-Nov-21 20:15:49 - ************reduction end************
+10-Nov-21 20:15:49 - hblock is:
+10-Nov-21 20:15:49 - c9585a2d3517b678a36fda055219ce60c45ae0667f2dcdec34ac6568d0f1b449
+10-Nov-21 20:15:53 - ************Consensus end*********
+10-Nov-21 20:15:53 - FINAL consensus is:
+10-Nov-21 20:15:53 - c9585a2d3517b678a36fda055219ce60c45ae0667f2dcdec34ac6568d0f1b449
+10-Nov-21 20:16:41 - ************Consensus begin*********
+10-Nov-21 20:16:41 - ************begin reduction************
+10-Nov-21 20:16:47 - ************reduction end************
+10-Nov-21 20:16:47 - hblock is:
+10-Nov-21 20:16:47 - 10aa311dfac72aa9f91ccb9cb8c4cf1813f6db1fe5b0304631d97112535d25a5
+10-Nov-21 20:16:51 - ************Consensus end*********
+10-Nov-21 20:16:51 - FINAL consensus is:
+10-Nov-21 20:16:51 - 10aa311dfac72aa9f91ccb9cb8c4cf1813f6db1fe5b0304631d97112535d25a5
+10-Nov-21 20:17:40 - ************Consensus begin*********
+10-Nov-21 20:17:40 - ************begin reduction************
+10-Nov-21 20:17:46 - ************reduction end************
+10-Nov-21 20:17:46 - hblock is:
+10-Nov-21 20:17:46 - b0f1d75f5b34e15893487eb3271d3e0b8360e657be31f5ad0605637db8673900
+10-Nov-21 20:17:49 - ************Consensus end*********
+10-Nov-21 20:17:49 - FINAL consensus is:
+10-Nov-21 20:17:49 - b0f1d75f5b34e15893487eb3271d3e0b8360e657be31f5ad0605637db8673900
+10-Nov-21 20:18:38 - ************Consensus begin*********
+10-Nov-21 20:18:38 - ************begin reduction************
+10-Nov-21 20:18:44 - ************reduction end************
+10-Nov-21 20:18:44 - hblock is:
+10-Nov-21 20:18:44 - 4abbfee96267fcdbc4a68b4b884cbebee6de15b5c5ddbe84b3d4a97140df98b4
+10-Nov-21 20:18:47 - ************Consensus end*********
+10-Nov-21 20:18:47 - FINAL consensus is:
+10-Nov-21 20:18:47 - 4abbfee96267fcdbc4a68b4b884cbebee6de15b5c5ddbe84b3d4a97140df98b4
+10-Nov-21 20:19:37 - ************Consensus begin*********
+10-Nov-21 20:19:37 - ************begin reduction************
+10-Nov-21 20:19:42 - ************reduction end************
+10-Nov-21 20:19:42 - hblock is:
+10-Nov-21 20:19:43 - 1b28f28fbad601c65d88a31f72f76d6a323c98750f24e9e49d4afa7590de2457
+10-Nov-21 20:19:47 - ************Consensus end*********
+10-Nov-21 20:19:47 - FINAL consensus is:
+10-Nov-21 20:19:47 - 1b28f28fbad601c65d88a31f72f76d6a323c98750f24e9e49d4afa7590de2457
+10-Nov-21 20:20:37 - ************Consensus begin*********
+10-Nov-21 20:20:37 - ************begin reduction************
+10-Nov-21 20:20:43 - ************reduction end************
+10-Nov-21 20:20:43 - hblock is:
+10-Nov-21 20:20:43 - c5b8aa0cbf88d3aacd49b045d48ad36700156fb1a3097a5c6b22acd70dd27988
+10-Nov-21 20:20:47 - ************Consensus end*********
+10-Nov-21 20:20:47 - FINAL consensus is:
+10-Nov-21 20:20:47 - c5b8aa0cbf88d3aacd49b045d48ad36700156fb1a3097a5c6b22acd70dd27988
+10-Nov-21 20:21:35 - ************Consensus begin*********
+10-Nov-21 20:21:35 - ************begin reduction************
+10-Nov-21 20:21:42 - ************reduction end************
+10-Nov-21 20:21:42 - hblock is:
+10-Nov-21 20:21:42 - ae36466bc6476b26db1533b51b3a2cdbb2e70e910398560a0804c6d11accae73
+10-Nov-21 20:21:45 - ************Consensus end*********
+10-Nov-21 20:21:45 - FINAL consensus is:
+10-Nov-21 20:21:45 - ae36466bc6476b26db1533b51b3a2cdbb2e70e910398560a0804c6d11accae73
+10-Nov-21 20:22:33 - ************Consensus begin*********
+10-Nov-21 20:22:33 - ************begin reduction************
+10-Nov-21 20:22:39 - ************reduction end************
+10-Nov-21 20:22:39 - hblock is:
+10-Nov-21 20:22:39 - 938f6bce579983f741d40d82a0eb328e6fad7fd8ecd5c603eb89cc02079f3ee4
+10-Nov-21 20:22:43 - ************Consensus end*********
+10-Nov-21 20:22:43 - FINAL consensus is:
+10-Nov-21 20:22:43 - 938f6bce579983f741d40d82a0eb328e6fad7fd8ecd5c603eb89cc02079f3ee4
+10-Nov-21 20:23:31 - ************Consensus begin*********
+10-Nov-21 20:23:31 - ************begin reduction************
+10-Nov-21 20:23:37 - ************reduction end************
+10-Nov-21 20:23:37 - hblock is:
+10-Nov-21 20:23:37 - 4b41495065cff9df6e7dbead99dbbd362b5e18d5a0743fb195c6734dd8211e34
+10-Nov-21 20:23:41 - ************Consensus end*********
+10-Nov-21 20:23:41 - FINAL consensus is:
+10-Nov-21 20:23:41 - 4b41495065cff9df6e7dbead99dbbd362b5e18d5a0743fb195c6734dd8211e34
+10-Nov-21 20:24:29 - ************Consensus begin*********
+10-Nov-21 20:24:29 - ************begin reduction************
+10-Nov-21 20:24:36 - ************reduction end************
+10-Nov-21 20:24:36 - hblock is:
+10-Nov-21 20:24:36 - 79c1ce91c5ea64c926d032bff6115e63a3ac8a425ba3a3a2685b304c180c25f6
+10-Nov-21 20:24:39 - ************Consensus end*********
+10-Nov-21 20:24:39 - FINAL consensus is:
+10-Nov-21 20:24:39 - 79c1ce91c5ea64c926d032bff6115e63a3ac8a425ba3a3a2685b304c180c25f6
+10-Nov-21 20:25:27 - ************Consensus begin*********
+10-Nov-21 20:25:27 - ************begin reduction************
+10-Nov-21 20:25:13 - ************reduction end************
+10-Nov-21 20:25:13 - hblock is:
+10-Nov-21 20:25:13 - 78faa876b7fb5c8a3a38f80d55910699f4c7c387319014f9e8bd5aafd5025a31
+10-Nov-21 20:25:17 - ************Consensus end*********
+10-Nov-21 20:25:17 - FINAL consensus is:
+10-Nov-21 20:25:17 - 78faa876b7fb5c8a3a38f80d55910699f4c7c387319014f9e8bd5aafd5025a31

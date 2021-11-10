@@ -83,33 +83,45 @@ class Communicator():
     def recv_msg(self):
         # print(self.consensus_flag)
         # if self.consensus_flag:
+        while not self.consensus_flag:
+            continue
         socket = zmq.Context().socket(zmq.SUB)
         socket.connect('tcp://%s:5565' % self.serverip)
         socket.setsockopt_string(zmq.SUBSCRIBE, '')
-        msg = socket.recv_pyobj()
-        self.RecvMsgBuffer.push(msg[0], msg[1])
+        while self.consensus_flag:
+            msg = socket.recv_pyobj()
+            self.RecvMsgBuffer.push(msg[0], msg[1])
 
     def recv_problock_msg(self):
         # print('当前problockmsgbuffer中的数量为', self.ProBlockMsgBuffer.getLength())
         # if self.problock_flag:
+        while not self.problock_flag:
+            continue
         socket = zmq.Context().socket(zmq.SUB)
         socket.connect('tcp://%s:5570' % self.serverip)
         socket.setsockopt_string(zmq.SUBSCRIBE, '')
-        msg = socket.recv_pyobj()
-        self.ProBlockMsgBuffer.push(msg[0], msg[1])
+        while self.problock_flag:
+            msg = socket.recv_pyobj()
+            self.ProBlockMsgBuffer.push(msg[0], msg[1])
 
     def recv_txblock_msg(self):
         # if self.txblock_flag:
+        while not self.txblock_flag:
+            continue
         socket = zmq.Context().socket(zmq.SUB)
         socket.connect('tcp://%s:5575' % self.serverip)
         socket.setsockopt_string(zmq.SUBSCRIBE, '')
-        msg = socket.recv_pyobj()
-        self.TxBlockBuffer.push(msg[0], msg[1])
+        while self.txblock_flag:
+            msg = socket.recv_pyobj()
+            self.TxBlockBuffer.push(msg[0], msg[1])
 
     def recv_TeeProof_msg(self):
         # if self.teeproof_flag:
+        while not self.teeproof_flag:
+            continue
         socket = zmq.Context().socket(zmq.SUB)
         socket.connect('tcp://%s:5580' % self.serverip)
         socket.setsockopt_string(zmq.SUBSCRIBE, '')
-        msg = socket.recv_pyobj()
-        self.TeeProofBuffer.push(msg[0], msg[1])
+        while self.teeproof_flag:
+            msg = socket.recv_pyobj()
+            self.TeeProofBuffer.push(msg[0], msg[1])

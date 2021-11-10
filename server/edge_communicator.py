@@ -21,7 +21,7 @@ class Communicator():
         self.shard_id = shard_id
         self.iplist = iplist
 
-        # 消息接受Buffer
+        # 共识消息接受和发送Buffer
         self.RecMsgBuffer = PriorityQueue()
         self.SendMsgBuffer = PriorityQueue()
 
@@ -61,11 +61,16 @@ class Communicator():
             self.socket6.append(socket)
 
     def init_buffer(self):
+        self.RecMsgBuffer = PriorityQueue()
+        self.SendMsgBuffer = PriorityQueue()
+
         self.AppendBlockSigBuffer = PriorityQueue()
         self.TxBlockSigBuffer = PriorityQueue()
         self.TeeProofSigBuffer = PriorityQueue()
+
+        self.ProBlockMsgBuffer = PriorityQueue()
         self.TxBlockMsgBuffer = PriorityQueue()
-        # self.TeeProogMsgBuffer = PriorityQueue()
+        self.TeeProogMsgBuffer = PriorityQueue()
 
     def recv_msg(self):
         # context = zmq.Context()

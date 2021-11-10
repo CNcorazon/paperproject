@@ -25,15 +25,18 @@ class PriorityQueue:
         #     if not self.isEmpty():
         #         (priority, _, item) = heapq.heappop(self.heap)
         #         return item, priority
-        (priority, _, item) = heapq.heappop(self.heap)
-        return item, priority
+        try:
+            (priority, _, item) = heapq.heappop(self.heap)
+            return item, priority
+        except:
+            return 'empty', 0
 
     # 空队列超过一定的时间，则返回NONE
     # def threshold_pop(self, threshold):
     #     start = time.time()
     #     while self.isEmpty():
     #         if time.time() > start + threshold:
-    #             return 'timeout', 0
+    #             return 'timeout'
     #         if not self.isEmpty():
     #             (priority, _, item) = heapq.heappop(self.heap)
     #             return item, priority
