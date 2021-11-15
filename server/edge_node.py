@@ -79,14 +79,13 @@ class EdgeNode():
 
         self.TxblockflagBuffer = PriorityQueue()
 
+    '''
+    通信模块，其中recmsgs接收所有类型的数据，并通过消息转发线程发送至其他线程的buffer，
+    sendmsgs用于发送共识中的消息，sendgossipmsg用于服务器之间的gossip
+    '''
+
     def recvmsgs(self):
         self.communicator.recv_msg()
-
-    def sendgossipmsg(self):
-        while self.communicator.SysnMsgBuffer.getLength() <= 0:
-            continue
-        msg = self.communicator.SysnMsgBuffer.pop()
-        self.communicator.send_gossipvote(msg)
 
     def sendmsgs(self):
         while self.communicator.SendMsgBuffer.getLength() <= 0:
@@ -95,6 +94,12 @@ class EdgeNode():
         # msg[0].update_weight(self.node_storage.get_mobileweight(
         #     msg[0].pk_pem), self.node_storage.totalweight)
         self.communicator.send_msg(msg)
+
+    def sendgossipmsg(self):
+        while self.communicator.SysnMsgBuffer.getLength() <= 0:
+            continue
+        msg = self.communicator.SysnMsgBuffer.pop()
+        self.communicator.send_gossipvote(msg)
 
     def sendproblock(self):
         while self.communicator.ProBlockMsgBuffer.getLength() <= 0:
@@ -153,13 +158,8 @@ class EdgeNode():
     n+1开始进行共识（就是说可以先准备好vrf，等待problock_candidate）
     '''
 
-    '''
-    三个阶段各一个线程
-    '''
-
     def generate_problock(self):
-        # 花三秒时间来创建problock, 省略对n-2块和n-5个块签名的确认
-        time.sleep(3)
+        # 应该发送tx_block_pool[n-2], merkleroot[n-5]
         shard_length = len(self.node_storage.proposal_block[1])+1
         previous_hash = self.node_storage.proposal_block[1][-1].decode()
         block = ProBlock(
@@ -188,7 +188,8 @@ class EdgeNode():
                     msg[0].sign_msg['consensus_block'])
                 print(self.node_storage.proposal_block[self.shard_id])
                 counts = 0
-                time.sleep(5)
+                # 由于节点较少，这边先模拟共识时间，先睡3秒
+                time.sleep(3)
                 print('Append a problock')
                 logging.info('************Append a problock!************')
                 # 发送problock
@@ -200,9 +201,13 @@ class EdgeNode():
                     pro_block_msg, random.randint(1, 2000))
                 # 清空所有buffer（除了同步buffer），确保不再发送消息（但是要处理移动节点超时上传的msg
 
+    '''
+    生成txblock并发送，收集已签名的txblock，然后按照生成交易的时间顺序（timestamp）将他们存进problock的txblock_pool
+    '''
+
     def generate_txblock(self):
-        # 花0.5秒来创建txblock, 省略打包步骤
-        # while self.TxblockflagBuffer.getLength() <= 0:
+        # 花0.05秒来创建txblock, 省略打包步骤
+        time.sleep(0.05)
         while len(self.node_storage.proposal_block[1]) <= 0:
             continue
         tx_block = TxBlock(
@@ -226,8 +231,11 @@ class EdgeNode():
                 self.node_storage.transaction_block_pool[len(self.node_storage.proposal_block[self.shard_id])], key=lambda x: x.timestamp)
             # print('收到了带有签名的txblock')
 
+    '''
+    验证txblock_pool中的交易，发送teeproof，并收集teeproof的签名，达到阈值则将交易写进txblock列表
+    '''
+
     def tx_validation(self):
-        # 单个txblock的验证时间为
         problock_num = len(self.node_storage.proposal_block[self.shard_id]) - 3
         count = 1
         # print('************当前块为: ', problock_num)
@@ -239,6 +247,12 @@ class EdgeNode():
                 print('当前交易验证的块是: ', problock_num)
                 print('当前共识块的长度为: ',
                       len(self.node_storage.proposal_block[self.shard_id]) - 3)
+                # 模拟交易验证时间，分为验证签名和验证语义合法性
+                # 签名用for循环模拟出大概是0.11秒，语义合法性之后补充，这边先睡一段时间
+                t = 0.11
+                time.sleep(t)
+                # 合法性验证时间
+                time.sleep(2*t)
                 # msg中可以模拟验证的成功率，比如生成一个1-100随机数，1-5则验证失败
                 num = random.randint(1, 100)
                 # if num > 5:
@@ -262,6 +276,10 @@ class EdgeNode():
                     self.node_storage.transaction_block_pool[problock_num] = []
                     break
                 count = count + 1
+            logging.info('当前验证的交易在链上的位置为')
+            logging.info(str(problock_num))
+            logging.info('当前已经发送teeproof的个数为')
+            logging.info(str(count))
         while len(self.node_storage.proposal_block[self.shard_id]) - 3 == problock_num:
             # print(12312412413242312312312312132)
             continue
@@ -269,6 +287,8 @@ class EdgeNode():
     def AppendTxblock(self):
         # 需要由不同tee签名的txblock才可以上链
         count = {}
+        _count = 0
+        num = 0
         pro_num = len(self.node_storage.proposal_block[1]) - 3
         # 超时机制
         to = True
@@ -302,9 +322,18 @@ class EdgeNode():
             print('problock_num, 其中各个txblock收到的teeproofsig数量:', pro_num, count)
             for key in count:
                 if count[key] > 2/3 * config.TEE_NUM:
+                    _count = _count + 1
                     self.node_storage.transaction_block[pro_num].append(key)
             print('problock_num, txblocks:', pro_num,
                   self.node_storage.transaction_block[pro_num])
             while len(self.node_storage.proposal_block[1])-3 == pro_num:
                 continue
+            num = len(
+                self.node_storage.transaction_block[pro_num]) * config.TXPERTXBLOCK
+            logging.info('收到足够多teeproofsig的txblock个数为')
+            logging.info(str(len(count)))
+            logging.info('已经上链的交易数量为')
+            logging.info(str(num))
+            return num
+
             # print(self.node_storage.transaction_block[len()])

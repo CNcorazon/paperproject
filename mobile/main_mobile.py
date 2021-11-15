@@ -51,10 +51,11 @@ class Thread1(threading.Thread):
 
     def run(self):
         while self.__running.isSet():
-            self.node.propose_block()
-            self.node.BAstar()
-            self.node.signing_txblock()
-            self.node.signing_teeproof()
+            self.node.node_consensus()
+            # self.node.propose_block()
+            # self.node.BAstar()
+            # self.node.signing_txblock()
+            # self.node.signing_teeproof()
 
     def stop(self):
         self.__flag.set()
@@ -152,10 +153,11 @@ class Thread9(threading.Thread):
 
 
 def main():
-    serverip = '192.168.199.102'
+    serverip = '172.19.32.98'
+    consensus = 'horizonchain'
     # serverip1 = '10.211.55.4'
 
-    node = MobileNode('192.168.199.102', 1, 2, 1, serverip)
+    node = MobileNode('172.19.32.98', 1, 2, 1, serverip, consensus)
     node.node_storage.set_N(0)
 
     thread1 = Thread1(node)

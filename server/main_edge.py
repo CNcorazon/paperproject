@@ -220,8 +220,19 @@ class AppendTxblockThread(threading.Thread):
         self.__running.set()
 
     def run(self):
+        start = time.time()
+        all_tx = 0
         while self.__running.isSet():
-            self.node.AppendTxblock()
+            # 返回本轮上链的交易个数
+            tx_num = self.node.AppendTxblock()
+            try:
+                all_tx = all_tx + tx_num
+                t = time.time() - start
+                tps = all_tx/t
+                logging.info('tps is:')
+                logging.info(str(tps))
+            except:
+                continue
 
     def stop(self):
         self.__flag.set()

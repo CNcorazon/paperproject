@@ -11,15 +11,6 @@ from message import message
 from util import PriorityQueue
 import time
 import sys
-# _round = 5
-# num = 10
-# w = 50
-# W = 100
-# value = 0
-# last_block = b'1234'
-# seed = str(_round) + hashlib.sha256(last_block).hexdigest()
-# sk = read_private_key()
-# pi, j = Sortiiton(sk, seed, num, w, W)
 
 
 class Communicator():

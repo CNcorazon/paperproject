@@ -83,7 +83,6 @@ class Communicator():
                 # pk = serialization.load_pem_public_key(pem)
                 self.socket1.send_string('Send successfully!')
                 self.RecMsgBuffer.push(msg[0], msg[1])
-                logging.info("RecvMsgThread: recvd msg from client!")
             except Exception as e:
                 print('异常:', e)
                 sys.exit()

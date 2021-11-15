@@ -5,10 +5,79 @@ from message import message
 from rsa_sign import *
 import pickle
 import CommonCoin
+import binascii
+import hashlib
+import random
+from util import PriorityQueue
+import rsa_vrf
+from mobile_communicator import Communicator
 
 
-class consensus(self):
-    def __init__(self):
+class Consensus():
+    def __init__(self, communicator, node_storage, public_key, private_key, consensus_flag):
+        self.communicator = communicator
+        self.node_storage = node_storage
+        self.consensus_flag = consensus_flag
+        self.public_key = public_key
+        self.private_key = private_key
+
+    def consensusrun(self):
+        if self.consensus_flag == 'horizonchain':
+            self.horizonchain()
+        if self.consensus_flag == 'blockene':
+            self.blockene()
+
+    def horizonchain(self):
+        self.propose_block()
+        self.BAstar()
+        self.signing_txblock()
+        self.signing_teeproof()
+
+    def blockene(self):
+        return 0
+
+    '''
+    计算vrf,并提出pro_block
+    '''
+
+    def propose_block(self):
+        self.communicator.problock_flag = True
+        while True:
+            while self.communicator.ProBlockMsgBuffer.getLength() <= 0:
+                continue
+            msg, priority = self.communicator.ProBlockMsgBuffer.pop()
+            pro_block = msg.sign_msg
+            if self.node_storage.N <= pro_block.shard_length - 3 or self.node_storage.N == 0:
+                break
+        self.communicator.problock_flag = False
+        # 提前建立链接试一试，会收到别的流水线的共识信息吗？
+        self.communicator.consensus_flag = True
+        seed = str(pro_block.shard_length) + pro_block.previous_hash
+        # sortition.Sortiiton(self.private_key, seed, config.CANDIDATE,
+        #                     self.node_storage.weight, self.node_storage.totalweight)
+        # 简略实现
+        pi = rsa_vrf.get_vrf(seed, self.private_key)
+        self.node_storage.set_pi(pi)
+        votes = bin(int(binascii.hexlify(pi), 16))[-2:]
+        # 1/4的概率提出problock
+        if votes == '00' or votes == '01' or votes == '10' or votes == '11':
+            # 补充problock中的信息，block.py中的 #1部分
+            pro_block.timestamp = int(time.time())
+            pro_block.vrf = self.node_storage.pi
+            pro_block.set_publickey(self.public_key)
+            pro_block.set_sig(self.private_key)
+            # 放进message类中
+            sig = signing(pro_block.get_str(), self.private_key)
+            msg1 = message(self.public_key, sig, 'pro_block', pro_block)
+            # 防止接受到其他流水线的共识信息，所以先提前清空这个buffer
+            self.communicator.RecvMsgBuffer = PriorityQueue()
+            self.communicator.SendMsgBuffer.push(
+                msg1, random.randint(1, 2000))
+            print('propose了一个块')
+
+    '''
+    BA* 共识模块
+    '''
 
     def BAstar(self):
         logging.info('************Consensus begin*********')
@@ -272,3 +341,96 @@ class consensus(self):
                     if count_[0][1] > 2/3 * self.node_storage.node_num:
                         return count_[0][0]
             return 'timeout'
+
+    def ProcessMsg(self, msg):
+        #  sign_m = {'round': _round, 'step': _step, 'pi': pi,
+        #                   'hprev': hprev(string), 'value': value(string), 'weight': weight, 'totalweight': totalweight}
+
+        pk = serialization.load_pem_public_key(msg.pk_pem, default_backend())
+        sig = msg.sig
+        sign_msg = msg.sign_msg
+        # print('processing msg:', sign_msg)
+        if not verification(pk, sig, pickle.dumps(sign_msg)):
+            return 0, 0
+        _round = sign_msg['round']
+        _step = sign_msg['step']
+        pi = sign_msg['pi']
+        hprev = sign_msg['hprev']
+        value = sign_msg['value']
+        weight = sign_msg['weight']
+        totalweight = sign_msg['totalweight']
+        seed = str(_round) + hprev
+        # 正确流程是每个移动节点在进入共识之前请求当前区块的层数和previous_hash，再进行共识；
+        # 但这边省去了该步骤，直接让移动节点相信服务器的信息即可。
+        # self.node_storage.N = _round
+        # self.node_storage.previous_hash = hprev
+        # if hprev != self.node_storage.previous_hash:
+        #     print('卡在这里了')
+        #     return 0, 0
+
+        # 先不设置权重
+        # votes = sortition.VerifySort(
+        #     pk, pi, seed, config.CANDIDATE, weight, totalweight)
+        votes = 1
+        return votes, value
+    '''
+    交易块签名模块
+    '''
+
+    def signing_txblock(self):
+        print('start signing txblocks')
+        self.communicator.txblock_flag = True
+        while True:
+            while self.communicator.TxBlockBuffer.getLength() <= 0:
+                continue
+            msg, priority = self.communicator.TxBlockBuffer.pop()
+            txblock = msg.sign_msg
+            print('交易区块shard_length, ns_N:',
+                  txblock.shard_length, self.node_storage.N)
+            if txblock.shard_length > self.node_storage.N:
+                break
+            if txblock.shard_length < self.node_storage.N:
+                continue
+            txblock.timestamp = int(time.time())
+            txblock.set_publickey(self.public_key)
+            txblock.set_sig(self.private_key)
+            txblock_sig = message(public_key=self.public_key, sig=signing(pickle.dumps(
+                txblock), self.private_key), msgtype='txblock_sig', sign_msg=txblock)
+            self.communicator.SendMsgBuffer.push(
+                txblock_sig, random.randint(2, 10000))
+        self.communicator.SendMsgBuffer = PriorityQueue()
+        self.communicator.txblock_flag = False
+        print('signing txblocks end')
+
+    '''
+    交易验证模块（tee有效性证明的签名
+    '''
+
+    def signing_teeproof(self):
+        # 该步骤需要验证不同tee的proof
+        if self.node_storage.N >= 3:
+            print('start signing teeproof')
+            self.communicator.teeproof_flag = True
+            while True:
+                while self.communicator.TeeProofBuffer.getLength() <= 0:
+                    continue
+                msg, priority = self.communicator.TeeProofBuffer.pop()
+                if msg.sign_msg['problock_num'] > self.node_storage.N - 2:
+                    print('收到的teeproof的位置，应该收到的位置：',
+                          msg.sign_msg['problock_num'], self.node_storage.N - 2)
+                    break
+                if msg.sign_msg['problock_num'] < self.node_storage.N - 2:
+                    continue
+                teepk = serialization.load_pem_public_key(
+                    msg.pk_pem, default_backend())
+                if verification(public_key=teepk, sig=msg.sig, msg=pickle.dumps(msg.sign_msg)):
+                    print('验证teeproof: ', msg.sign_msg['txblock_num'])
+                    sig = message(public_key=self.public_key, sig=signing(pickle.dumps(
+                        msg.sign_msg), self.private_key), msgtype='proof_sig', sign_msg=msg.sign_msg)
+                    self.communicator.SendMsgBuffer.push(
+                        sig, random.randint(2, 10000))
+                else:
+                    print('teeproof无效！')
+            self.communicator.SendMsgBuffer = PriorityQueue()
+            self.communicator.teeproof_flag = False
+            print('signing teeproof end')

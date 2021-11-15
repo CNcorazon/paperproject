@@ -5,6 +5,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 import os
+import time
 
 
 def generate_private_key():
@@ -93,17 +94,16 @@ def save_private_key(private_key, pem_name):
 
 if __name__ == '__main__':
     msg = b"A message I want to sign"
-    if os.path.exists('private_key.pem'):
-        private_key = read_private_key()
-    else:
-        private_key = generate_private_key()
-        save_private_key(private_key, 'private_key.pem')
+
+    private_key = rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=2048,
+        backend=default_backend())
 
     sig = signing(msg, private_key)
     public_key = generate_public_key(private_key)
-    save_public_key(public_key, 'public_key.pem')
-    print(verification(public_key, sig, msg))
-
-    p = read_public_key()
-
-    print(verification(p, sig, msg))
+    start = time.time()
+    for _ in range(1, 1000):
+        verification(public_key, sig, msg)
+    t = time.time() - start
+    print(t)
