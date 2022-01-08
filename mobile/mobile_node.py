@@ -83,7 +83,7 @@ class MobileNodeStorage():
         self.shard_id = shard_id
         self.nodes = nodes
         self.shard_num = shard_num
-        self.node_num = 2
+        self.node_num = 1
         self.N = 0
         self.public_keys = {}
 
@@ -100,6 +100,12 @@ class MobileNodeStorage():
 
         # 有MAXSTEP个列表
         self.votelist = [[], [], [], [], [], [], [], [], [], []]
+
+        self.proposal_block = []
+        self.tx_pools = []
+
+        for _ in range(config.MAXLENGTH):
+            self.proposal_block.append([])
 
     def set_N(self, num):
         self.N = num

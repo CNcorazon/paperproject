@@ -252,7 +252,7 @@ class EdgeNode():
                 t = 0.11
                 time.sleep(t)
                 # 合法性验证时间
-                time.sleep(2*t)
+                time.sleep(3)
                 # msg中可以模拟验证的成功率，比如生成一个1-100随机数，1-5则验证失败
                 num = random.randint(1, 100)
                 # if num > 5:

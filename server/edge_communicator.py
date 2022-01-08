@@ -167,20 +167,20 @@ class Communicator():
         #     socket.send_multipart((pem, sig, msg, weight, totalweight))
         # print("Thread4: pub one vote end")
 
-    def recv_result(self, ResultMsgBuffer):
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        socket.bind("tcp://*:5570")
-        while True:
-            try:
-                print("Thread5: wait for proposal result ...")
-                pem, sig, sign_m = socket.recv_multipart()
-                socket.send_string("OK!")
-                ResultMsgBuffer.put((pem, sig, sign_m))
-                print("Thread5: recvd proposal result from nodes!")
-            except Exception as e:
-                print("异常：", e)
-                sys.exit()
+    # def recv_result(self, ResultMsgBuffer):
+    #     context = zmq.Context()
+    #     socket = context.socket(zmq.REP)
+    #     socket.bind("tcp://*:5570")
+    #     while True:
+    #         try:
+    #             print("Thread5: wait for proposal result ...")
+    #             pem, sig, sign_m = socket.recv_multipart()
+    #             socket.send_string("OK!")
+    #             ResultMsgBuffer.put((pem, sig, sign_m))
+    #             print("Thread5: recvd proposal result from nodes!")
+    #         except Exception as e:
+    #             print("异常：", e)
+    #             sys.exit()
 
     # def send_N(self, num):
     #     # 服务器发送N，可能应该写在服务器上

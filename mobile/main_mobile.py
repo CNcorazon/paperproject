@@ -153,11 +153,12 @@ class Thread9(threading.Thread):
 
 
 def main():
-    serverip = '172.19.32.98'
+    serverip = '192.168.1.4'
     consensus = 'horizonchain'
+    #consensus = 'blockene'
     # serverip1 = '10.211.55.4'
 
-    node = MobileNode('172.19.32.98', 1, 2, 1, serverip, consensus)
+    node = MobileNode('192.168.1.4', 1, 2, 1, serverip, consensus)
     node.node_storage.set_N(0)
 
     thread1 = Thread1(node)

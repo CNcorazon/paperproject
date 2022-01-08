@@ -11,20 +11,21 @@ import random
 from util import PriorityQueue
 import rsa_vrf
 from mobile_communicator import Communicator
+from block import *
 
 
 class Consensus():
-    def __init__(self, communicator, node_storage, public_key, private_key, consensus_flag):
+    def __init__(self, communicator, node_storage, public_key, private_key, consensusflag):
         self.communicator = communicator
         self.node_storage = node_storage
-        self.consensus_flag = consensus_flag
+        self.consensusflag = consensusflag
         self.public_key = public_key
         self.private_key = private_key
 
     def consensusrun(self):
-        if self.consensus_flag == 'horizonchain':
+        if self.consensusflag == 'horizonchain':
             self.horizonchain()
-        if self.consensus_flag == 'blockene':
+        if self.consensusflag == 'blockene':
             self.blockene()
 
     def horizonchain(self):
@@ -34,7 +35,11 @@ class Consensus():
         self.signing_teeproof()
 
     def blockene(self):
-        return 0
+        self.blockeneProposeblock()
+        hblock = self.blockeneReduciton()
+        self.blockeneBinaryBA(hblock)
+        self.tx_validation()
+        self.blockenesigning_result()
 
     '''
     计算vrf,并提出pro_block
@@ -288,7 +293,7 @@ class Consensus():
                         counts[value] = counts[value] + votes
                     count_ = sorted(counts.items(), key=lambda kv: (
                         kv[1], kv[0]), reverse=True)
-                    # print('收到的投票数量:', count_[0][1])
+                    print('收到的投票数量:', count_[0][1])
                     if count_[0][1] > 2/3 * self.node_storage.node_num:
                         return count_[0][0]
             return 'timeout'
@@ -434,3 +439,169 @@ class Consensus():
             self.communicator.SendMsgBuffer = PriorityQueue()
             self.communicator.teeproof_flag = False
             print('signing teeproof end')
+
+    '''
+    blockene中的部分
+    '''
+
+    def blockeneProposeblock(self):
+        # 1.下载txpools & commitments
+        # 2.上传witnesslist，上传5个tx_pools
+        # 3.每个proposer下载所有的witnesslist，打包交易propose出来
+        logging.info('************begin proposeblock************')
+        self.communicator.consensus_flag = True
+        # 1. 下载45个txpools，
+        time.sleep(20)
+        # 2. 上传witness list
+        time.sleep(2)
+        # 3. proppose block
+        pro_block = self.generate_problock()
+        pro_block_msg = message(public_key=self.public_key, sig=signing(
+            pickle.dumps(pro_block), self.private_key), msgtype='pro_block', sign_msg=pro_block)
+        seed = str(pro_block.shard_length) + pro_block.previous_hash
+        # sortition.Sortiiton(self.private_key, seed, config.CANDIDATE,
+        #                     self.node_storage.weight, self.node_storage.totalweight)
+        # 简略实现
+        pi = rsa_vrf.get_vrf(seed, self.private_key)
+        self.node_storage.set_pi(pi)
+        votes = bin(int(binascii.hexlify(pi), 16))[-2:]
+        # 1/4的概率提出problock
+        if votes == '00' or votes == '01' or votes == '10' or votes == '11':
+            # 补充problock中的信息，block.py中的 #1部分
+            pro_block.timestamp = int(time.time())
+            pro_block.vrf = self.node_storage.pi
+            pro_block.set_publickey(self.public_key)
+            pro_block.set_sig(self.private_key)
+            # 放进message类中
+            sig = signing(pro_block.get_str(), self.private_key)
+            msg1 = message(self.public_key, sig, 'pro_block', pro_block)
+            # 防止接受到其他流水线的共识信息，所以先提前清空这个buffer
+            # self.communicator.RecvMsgBuffer = PriorityQueue()
+            self.communicator.SendMsgBuffer.push(
+                msg1, random.randint(1, 2000))
+            print('propose了一个块')
+
+    def blockeneReduciton(self):
+        logging.info('************begin reduction************')
+        # 该步骤的目的是将consensus on arbitrary value转化为consensus on binary value, i.e. {block_hash, empty_hash}
+        # 4.每个成员下载缺少的tx_pools
+        time.sleep(1)
+        # 5.下载，从candidate中选出vrf最小的作为自己本地的胜者
+        while self.communicator.RecvMsgBuffer.getLength() <= 0:
+            print(12312)
+            continue
+        msg, priority = self.communicator.RecvMsgBuffer.pop()
+        while msg.type != 'pro_block':
+            print(msg.sign_msg)
+            print(123123)
+            msg, priority = self.communicator.RecvMsgBuffer.pop()
+        # print('msg is:', msg.sign_msg)
+        # print('priority is:', priority)
+        pro_block = msg.sign_msg
+        print('本轮共识的区块层数:', pro_block.shard_length)
+        print('本轮共识的区块的hprev:', pro_block.previous_hash)
+        self.node_storage.N = pro_block.shard_length
+        self.node_storage.previous_hash = pro_block.previous_hash
+        start = time.time()
+        winner = pro_block
+        tmp = int(binascii.hexlify(pro_block.vrf).decode()[-5:], 16)
+        # 超时机制
+        to = True
+        while to:
+            while self.communicator.RecvMsgBuffer.getLength() <= 0:
+                if time.time() > start + config.EXPIRED_THRESHOLD:
+                    to = False
+                    break
+                continue
+            if to:
+                msg, priority = self.communicator.RecvMsgBuffer.pop()
+                if msg.type == 'pro_block':
+                    pro_block = msg.sign_msg
+                    print('收到了一个problock', pro_block, int(
+                        binascii.hexlify(pro_block.vrf).decode()[-5:], 16))
+                    if int(binascii.hexlify(pro_block.vrf).decode()[-5:], 16) < tmp:
+                        winner = pro_block
+                        tmp = int(binascii.hexlify(
+                            pro_block.vrf).decode()[-5:], 16)
+        print(winner.get_str())
+        # 首先验证block的签名
+        verification(winner.get_publickey(), winner.sig, winner.get_str())
+        # 检查自己是否有所有的交易,有的话则对该区块投票，若不全，则对empty块投票
+        # 这边省略，sleep1秒
+        time.sleep(1)
+        # 投票
+        value = hashlib.sha256(winner.get_str()).hexdigest().encode()
+        sig = signing(value, self.private_key)
+        msg = message(self.public_key, sig, 'reduction', value)
+        self.communicator.SendMsgBuffer.push(msg, random.randint(2001, 5000))
+        hblock = self.CountVote(0)
+        logging.info('************reduction end************')
+        logging.info('hblock is:')
+        try:
+            logging.info(hblock.decode())
+        except:
+            logging.info(hblock)
+        return hblock
+
+    def blockeneBinaryBA(self, block_hash):
+        logging.info('*********begin BBA*********')
+        hblock_star = self.BinaryBA(block_hash)
+        logging.info('*********end BBA*********')
+        # 检查是fianl/tentative共识,1:final,0:tentative
+        print('count vote begin')
+        r = self.CountVote(config.FINAL)
+        print('count vote end')
+        # print(2)
+        # 清空接受消息列表
+        self.communicator.consensus_flag = False
+        self.communicator.init_buffer()
+        if hblock_star == r:
+            print('send result begin')
+            msg = message(public_key=self.public_key, sig=signing(pickle.dumps({'consensus_block': hblock_star, 'votes': self.node_storage.votes}), self.private_key),
+                          msgtype='final_consensus', sign_msg={'consensus_block': hblock_star, 'votes': self.node_storage.votes})
+            self.communicator.SendMsgBuffer.push(msg, 1)
+            self.node_storage.previous_hash = hblock_star.decode()
+            logging.info('************Consensus end*********')
+            logging.info('FINAL consensus is:')
+            try:
+                logging.info(hblock_star.decode())
+            except:
+                logging.info(hblock_star)
+            print('send result end')
+            print('consensus end')
+        else:
+            print('send tentative consensus result')
+            msg = message(public_key=self.public_key, sig=signing(pickle.dumps({'consensus_block': hblock_star, 'votes': self.node_storage.votes}), self.private_key),
+                          msgtype='tentative_consensus', sign_msg={'consensus_block': hblock_star, 'votes': self.node_storage.votes})
+            self.communicator.SendMsgBuffer.push(msg, 1)
+            self.node_storage.previous_hash = hblock_star.decode()
+            logging.info('************Consensus end*********')
+            logging.info('TENTATIVE consensus is:')
+            try:
+                logging.info(hblock_star.decode())
+            except:
+                logging.info(hblock_star)
+            print('send result end')
+            print('consensus end')
+
+    def tx_validation(self):
+        # if empty block, skip
+        logging.info('*********begin tx_validation*********')
+        time.sleep(35)
+        return 'newmerkleroot'
+
+    def blockenesigning_result(self):
+        # send new merkle root and block number N
+        logging.info('*********begin sending result*********')
+        time.sleep(15)
+
+    def generate_problock(self):
+        shard_length = len(self.node_storage.proposal_block[1])+1
+        if shard_length == 1:
+            previous_hash = '0'
+        else:
+            previous_hash = self.node_storage.proposal_block[1][-1].decode()
+        block = ProBlock(
+            1, shard_length, previous_hash, None, None, None)
+        print('block num and previous hash:', shard_length, previous_hash)
+        return block

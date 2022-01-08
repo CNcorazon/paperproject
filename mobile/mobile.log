@@ -1,24 +1,16 @@
-15-Nov-21 19:52:31 - ************Consensus begin*********
-15-Nov-21 19:52:31 - ************begin reduction************
-15-Nov-21 19:52:37 - ************reduction end************
-15-Nov-21 19:52:37 - hblock is:
-15-Nov-21 19:52:37 - d387d8ac377290c9234c15af8f180db803ff667fc450efdb0cecbcc839a220ba
-15-Nov-21 19:52:41 - ************Consensus end*********
-15-Nov-21 19:52:41 - FINAL consensus is:
-15-Nov-21 19:52:41 - d387d8ac377290c9234c15af8f180db803ff667fc450efdb0cecbcc839a220ba
-15-Nov-21 19:53:13 - ************Consensus begin*********
-15-Nov-21 19:53:13 - ************begin reduction************
-15-Nov-21 19:53:18 - ************reduction end************
-15-Nov-21 19:53:18 - hblock is:
-15-Nov-21 19:53:18 - 0d970972a7252a376da414d8803dfd0c5313d19d841e46dd84eacc57be9b5c75
-15-Nov-21 19:53:22 - ************Consensus end*********
-15-Nov-21 19:53:22 - FINAL consensus is:
-15-Nov-21 19:53:22 - 0d970972a7252a376da414d8803dfd0c5313d19d841e46dd84eacc57be9b5c75
-15-Nov-21 19:53:26 - ************Consensus begin*********
-15-Nov-21 19:53:26 - ************begin reduction************
-15-Nov-21 19:53:32 - ************reduction end************
-15-Nov-21 19:53:32 - hblock is:
-15-Nov-21 19:53:32 - 73f4df8c785d6ca6cbd137df93071136436d0d693c591b701ff39d70ecd0830a
-15-Nov-21 19:53:36 - ************Consensus end*********
-15-Nov-21 19:53:36 - FINAL consensus is:
-15-Nov-21 19:53:36 - 73f4df8c785d6ca6cbd137df93071136436d0d693c591b701ff39d70ecd0830a
+08-Jan-22 10:57:05 - ************Consensus begin*********
+08-Jan-22 10:57:05 - ************begin reduction************
+08-Jan-22 10:57:11 - ************reduction end************
+08-Jan-22 10:57:11 - hblock is:
+08-Jan-22 10:57:11 - 263c93218968de07ee74f5f8024b57eac94f1be02d01d07195db4f489bae14e6
+08-Jan-22 10:57:15 - ************Consensus end*********
+08-Jan-22 10:57:15 - FINAL consensus is:
+08-Jan-22 10:57:15 - 263c93218968de07ee74f5f8024b57eac94f1be02d01d07195db4f489bae14e6
+08-Jan-22 10:57:34 - ************Consensus begin*********
+08-Jan-22 10:57:34 - ************begin reduction************
+08-Jan-22 10:57:40 - ************reduction end************
+08-Jan-22 10:57:40 - hblock is:
+08-Jan-22 10:57:40 - d63ef79d401d1fe6dcf99dc5b7315140d362787a90df2a1a0143ae14a6245685
+08-Jan-22 10:57:44 - ************Consensus end*********
+08-Jan-22 10:57:44 - FINAL consensus is:
+08-Jan-22 10:57:44 - d63ef79d401d1fe6dcf99dc5b7315140d362787a90df2a1a0143ae14a6245685
